@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-image: linear-gradient(to right, #6cf,#baf);
+            min-height: 100vh;
+            min-width: 100vh;
+        }
+
+        .logon{
+            min-width: 100vh;
+            min-height: 100vh;
+            background-color: rgb(0, 0, 0,0.5);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .close{
+            opacity: 1;
+        }
+
+        .logon-header{
+            width: 500px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            top: 200px;
+            padding-top: 20px;
+            background-image: url("../img/Bg4.jpg");
+            background-size: 500px;
+            background-position: 0 20% ;
+        }
+
+        .logon-header-text{
+            font: 600 50px "";
+        }
+
+        .logon-content{
+            width: 500px;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+            position: absolute;
+            top: 200px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .logon-text{
+            color: #fff;
+        }
+
+        .logon-form{
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+
+        .logon-form input[type=text],
+        .logon-form input[type=password]{
+            width: 200px;
+            height: 30px;
+            border: 3px solid #6cf;
+            background-color: rgb(0, 204, 255,0.6);
+            padding-left: 10px;
+        }
+
+        .logon-form input[type=text]:focus,
+        .logon-form input[type=password]:focus{
+            outline: 3px solid #fff;
+            box-shadow: 1px 1px 10px 1px #fff;
+        }
+
+        .logon-button{
+            width: 120px;
+            height: 30px;
+            background-color: #6cf;
+            border: 1px solid #0ff;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .logon-form-text{
+            font: 600 15px '';
+            color: #6cf;
+        }
+    </style>
+</head>
+<body>
+    <div class="logon close">
+        <header class="logon-header">
+            <span class="logon-text logon-header-text">Welcome</span>
+        </head>
+        <div class="logon-content logon-text">
+            <form action="#" class="logon-form">
+                <span class="logon-form-text">用户名：</span><input type="text" id="username">
+                <span class="logon-form-text">密码：&nbsp;&nbsp;&nbsp;</span><input type="password" id="password">
+                <input class="logon-button" type="button" value="登入">
+                <input class="logon-button" type="button" value="注册">
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        // 这是一个触发发送请求的事件处理函数
+        document.getElementsByClassName("logon-button")[0].addEventListener("click", function() {
+        // 获取动态变化的变量值
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        console.log(document.getElementById("username").value);
+        console.log(document.getElementById("password").value);
+
+        // 创建 XMLHttpRequest 对象
+        const xhr = new XMLHttpRequest();
+
+        // 设置请求的处理函数
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
+            {
+                // 请求成功处理代码
+                console.log(xhr.response);
+            } else {
+                // 请求出错处理代码
+                console.error(xhr.response);
+            }
+            
+        ;
+
+        // 设置请求方法和URL
+        xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
+
+        // 设置请求头
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        // 准备要发送的数据
+        const data = {
+            username,
+            password
+        };
+        console.log(JSON.stringify(data));
+
+        // 发送数据给服务器
+        xhr.send(JSON.stringify(data));
+        }
+    })
+    </script>
+
+</body>
+</html>
