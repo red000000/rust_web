@@ -4,10 +4,12 @@ pub struct SignUpInfo {
     username: String,
     password: String,
 }
-struct SignUpOk {
+#[derive(Serialize, Deserialize)]
+pub struct SignUpOk {
     message: String,
 }
-struct SignUpFail {
+#[derive(Serialize, Deserialize)]
+pub struct SignUpFail {
     message: String,
 }
 

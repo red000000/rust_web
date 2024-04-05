@@ -2,23 +2,23 @@
 路由:http://127.0.0.1:8080/sign_up
 请求方式:POST
 前端发送信息:
-sign_up_info:{
+SignUpInfo:{
     username:string
     password:string
 }
 
 返回值:
-    sign_up_ok:{
-        登录成功！
+    SignUpOk:{
+        message:"登录成功!"
     }
-    sign_up_fail:{
-        登录失败！
+    SignUpFail:{
+        message:"登录失败!"
     }
 注册信息
 路由:http://127.0.0.1:8080/sign_in
 请求方式:POST
 前端发送信息:
-sign_in_info:{
+SignInInfo:{
     username:string
     password:string
     sex:string
@@ -27,3 +27,10 @@ sign_in_info:{
     province:string
     city:string
 }
+返回值:
+    SignInOk:{
+        message:"登录成功!"
+    }
+    SignInFail:{
+        message:"登录失败!"
+    }
