@@ -124,44 +124,42 @@
         // 这是一个触发发送请求的事件处理函数
         document.getElementsByClassName("logon-button")[0].addEventListener("click", function() {
         // 获取动态变化的变量值
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        console.log(document.getElementById("username").value);
-        console.log(document.getElementById("password").value);
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            console.log(document.getElementById("username").value);
+            console.log(document.getElementById("password").value);
 
         // 创建 XMLHttpRequest 对象
-        const xhr = new XMLHttpRequest();
-
-        // 设置请求的处理函数
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
-            {
-                // 请求成功处理代码
-                console.log(xhr.response);
-            } else {
-                // 请求出错处理代码
-                console.error(xhr.response);
-            }
-            
-        ;
+            const xhr = new XMLHttpRequest();
 
         // 设置请求方法和URL
-        xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
+            xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
 
         // 设置请求头
-        xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+        // 设置请求的处理函数
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
+                {
+                // 请求成功处理代码
+                    console.log(xhr.response);
+                } else {
+                // 请求出错处理代码
+                    console.error(xhr.response);
+                };
+            }
 
         // 准备要发送的数据
-        const data = {
-            username,
-            password
-        };
-        console.log(JSON.stringify(data));
-
+            const data = {
+                username,
+                password
+                };
+                
         // 发送数据给服务器
-        xhr.send(JSON.stringify(data));
-        }
-    })
+                xhr.send(JSON.stringify(data));
+        })        
+
     </script>
 
 </body>
