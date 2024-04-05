@@ -27,9 +27,9 @@ fn init_cert_key() -> (String, String) {
 fn init_sign_up_router() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     //cors需要修改，等待数据类型确定
     let cors=warp::cors().allow_any_origin();
-    warp::path("cnm").and(warp::post()).and(warp::body::json()).map(|body:serde_json::Value| {
+    warp::path("sign_up").and(warp::post()).and(warp::body::json()).map(|body:serde_json::Value| {
         //对body一系列处理
-
+        
         //返回一个什么b东西
         warp::reply::reply()
     }).with(cors)
