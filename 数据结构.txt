@@ -61,6 +61,7 @@ SignInInfo:{
         country:string
         province:string
         city:string
+        profile_photo:string
     }
     失败:
     SearchUserInfoMessage:{

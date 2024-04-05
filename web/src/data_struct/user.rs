@@ -8,6 +8,7 @@ pub struct UserInfo {
     country: String,
     province: String,
     city: String,
+    profile_photo:String
 }
 #[derive(Serialize, Deserialize)]
 pub struct SearchUserInfo {
@@ -31,6 +32,7 @@ impl UserInfo {
             country: String::new(),
             province: String::new(),
             city: String::new(),
+            profile_photo:String::new(),
         }
     }
 }
