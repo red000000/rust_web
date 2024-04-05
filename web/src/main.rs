@@ -1,5 +1,9 @@
+mod data_struct;
+
 use std::env;
 use warp::Filter;
+use data_struct::sign_up::*;
+
 #[tokio::main]
 async fn main() {
     //log初始化
@@ -29,15 +33,20 @@ fn init_sign_up_router() -> impl Filter<Extract = impl warp::Reply, Error = warp
     let cors=warp::cors().allow_any_origin();
     warp::path("sign_up").and(warp::post()).and(warp::body::json()).map(|body:serde_json::Value| {
         //对body一系列处理
-        
-        //返回一个什么b东西
-        warp::reply::reply()
+        let sign_up_info:SignUpInfo=serde_json::from_value(body).unwrap();
+        let info=sign_up_info.get_info();
+        print!("{}{}",info.0,info.1);
+        if sign_up_info.check_info(){
+            "ok"
+        }else{
+            "错误"
+        }
     }).with(cors)
 }
-fn init_get_something_router() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+fn init_sign_in_router() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     //cors需要修改，等待数据类型确定
     let cors=warp::cors().allow_any_origin();
-    warp::path("cnm").and(warp::get()).map(|| {
+    warp::path("sign_in").and(warp::post()).map(|| {
         //返回一个什么b东西
         warp::reply::reply()
     }).with(cors)
