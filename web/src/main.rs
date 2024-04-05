@@ -17,7 +17,7 @@ async fn main() {
     let routers = sign_up_router
         .with(log)
         .or(sign_in_router.with(log))
-        .or(get_user_info_router);
+        .or(get_user_info_router.with(log));
 
     warp::serve(routers)
         //.tls()
