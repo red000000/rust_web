@@ -12,12 +12,9 @@ pub struct SignInInfo {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct SignInOk {
+pub struct SignInMessage {
     message: String,
-}
-#[derive(Serialize, Deserialize)]
-pub struct SignInFail {
-    message: String,
+    flag: bool,
 }
 
 impl SignInInfo {
@@ -49,13 +46,8 @@ impl SignInInfo {
         false
     }
 }
-impl SignInOk {
-    pub fn new(message: String) -> Self {
-        SignInOk { message: message }
-    }
-}
-impl SignInFail {
-    pub fn new(message: String) -> Self {
-        SignInFail { message: message }
+impl SignInMessage {
+    pub fn new(message: String, flag: bool) -> Self {
+        SignInMessage { message, flag }
     }
 }

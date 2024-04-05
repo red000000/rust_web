@@ -6,14 +6,18 @@ SignUpInfo:{
     username:string
     password:string
 }
-
-返回值:
-    SignUpOk:{
+后端返回值:
+    成功:
+    SignUpMessage:{
         message:"登录成功!"
+        flag:true
     }
-    SignUpFail:{
+    失败:
+    SignUpMessage:{
         message:"登录失败!"
+        flag:false
     }
+
 注册信息
 路由:http://127.0.0.1:8080/sign_in
 请求方式:POST
@@ -27,10 +31,39 @@ SignInInfo:{
     province:string
     city:string
 }
-返回值:
-    SignInOk:{
-        message:"登录成功!"
+后端返回值:
+    成功:
+    SignInInfoMessage:{
+        message:"获取用户信息成功!"
+        flag:true
     }
-    SignInFail:{
-        message:"登录失败!"
+    失败:
+    SignInInfoMessage:{
+        message:"获取用户信息失败!"
+        flag:false
+    }
+
+//后面会把api端口换一个，现在暂时先用同端口
+请求用户信息
+路由:http://127.0.0.1:8080/api/get_user_info
+请求方式:GET
+前端发送信息:
+    SearchUserInfo{
+        username:string
+    }
+后端发送信息:
+    成功找到用户信息:
+    UserInfo:{
+        username:string
+        password:string
+        sex:string
+        birthday:string
+        country:string
+        province:string
+        city:string
+    }
+    失败:
+    SearchUserInfoMessage:{
+        message:"用户不存在!"
+        flag:false
     }

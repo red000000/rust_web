@@ -5,13 +5,11 @@ pub struct SignUpInfo {
     password: String,
 }
 #[derive(Serialize, Deserialize)]
-pub struct SignUpOk {
+pub struct SignUpMessage {
     message: String,
+    flag: bool,
 }
-#[derive(Serialize, Deserialize)]
-pub struct SignUpFail {
-    message: String,
-}
+
 
 impl SignUpInfo {
     //获取用户名和密码
@@ -27,17 +25,12 @@ impl SignUpInfo {
         }
     }
 }
-impl SignUpOk {
-    pub fn new(message: String) -> Self {
-        SignUpOk {
-            message: message,
+impl SignUpMessage {
+    pub fn new(message: String,flag:bool) -> Self {
+        SignUpMessage {
+            message,
+            flag,
         }
     }
 }
-impl SignUpFail {
-    pub fn new(message: String) -> Self {
-        SignUpFail {
-            message: message,
-        }
-    }
-}
+
