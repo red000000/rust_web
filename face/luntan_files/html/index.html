@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目</title>
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="../css/public.css">
+</head>
+
+<body>
+
+    <div class="shell">
+        <header>
+            <div id="logon" class="image-text">
+                <span class="image">
+                    <img src="../img/Logo_巴别塔.png" alt="">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">登入</span>
+                    <span class="level"></span>
+                </div>
+            </div>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
+                <ul class="menu-links">
+                    <li class="div-link active">
+                        <a href="#">
+                            <i class="iconfont icon-shouye icon"></i>
+                            <span class="text nac-text">首页</span>
+                        </a>
+                    </li>
+
+                    <li class="div-link">
+                        <a href="#">
+                            <i class="iconfont icon-xiaoxi icon"></i>
+                            <span class="text nac-text">消息</span>
+                        </a>
+                    </li>
+                    <br><hr>
+                    
+                    <li class="div-link">
+                        <a href="#">
+                            <i class="iconfont icon-xiaoxi icon"></i>
+                            <span class="text nac-text">分区1</span>
+                        </a>
+                    </li>
+
+                    <li class="div-link">
+                        <a href="#">
+                            <i class="iconfont icon-xiaoxi icon"></i>
+                            <span class="text nac-text">分区2</span>
+                        </a>
+                    </li>
+                    
+                    <li class="div-link">
+                        <a href="#">
+                            <i class="iconfont icon-xiaoxi icon"></i>
+                            <span class="text nac-text">分区3</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="">
+                    <a href="#">
+                        <i class="iconfont icon-zhuxiaoyuan icon"></i>
+                        <span class="text nac-text">注销</span>
+                    </a>
+                </li>
+            </div>
+        </div>
+
+    </div>
+    <div class="lmenu-shouye">
+        <div class="lmenu-text">
+            <span class="ltext">发现分区
+            </span>
+        </div>
+        <hr>
+        <div>
+            <ul class="lmenuul">
+                <a href="#"><li class="lmenuli lmenuli-active">精选</li></a>
+                <a href="#"><li class="lmenuli">动漫</li></a>
+                <a href="#"><li class="lmenuli">音乐</li></a>
+                <a href="#"><li class="lmenuli">游戏</li></a>
+                <a href="#"><li class="lmenuli">生活</li></a>
+                <a href="#"><li class="lmenuli">娱乐</li></a>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="thead">
+            <div class="thead-text">
+                <h2>为你推荐分区</h2>
+                <span>动漫、音乐、游戏，更多分区等你发觉</span>
+            </div>
+            <div class="thead-search">
+                <form action="#" class="search">
+                    <input type="text" value="搜索...">
+                </form>
+            </div>
+        </div>
+        <div class="tbody">
+            <table class="tbodyta">
+                <tr class="tbodytr">
+                    <td class="tbodytd">
+                        <div class="tdhead">
+                            <a href="#"><img src="../img/780px-活动预告_去咧嘴谷_01.jpg" alt="头图"></a>
+                        </div>
+                        <div class="tdbody">
+                            <a href="#">
+                                <img src="../img/明日方舟-logo.png" alt="分区头像">
+                                <span class="tdbody-text">
+                                    明日方舟
+                                </span>
+                                <span class="tdbody-text btext-font">
+                                    xx人来过 | 万人加入
+                                </span>
+                                <span class="tdbody-text btext-font btext-m">
+                                    欢迎各位博士加入明日方舟的论坛！
+                                </span>
+                            </a>
+                        </div>
+                        <div class="tdfooter">
+                            <input type="button" value="加入" class="tdfooter-button">
+                        </div>
+                    </td>
+                    <td class="tbodytd"></td>
+                    <td class="tbodytd"></td>
+                </tr>
+                <tr class="tbodytr">
+                    <td class="tbodytd"></td>
+                    <td class="tbodytd"></td>
+                    <td class="tbodytd"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="zhuce" class="llogon close">
+        <header class="llogon-header">
+            <span class="llogon-text llogon-header-text">Welcome</span>
+            <div id="logon-close" class="llogon-header-close">
+                <b>X</b>
+            </div>
+            </head>
+            <div class="llogon-content llogon-text">
+                <form action="#" class="llogon-form">
+                    <span class="llogon-form-text">用户名：</span><input type="text" id="username">
+                    <span class="llogon-form-text">密码：&nbsp;&nbsp;&nbsp;</span><input type="password" id="password">
+                    <input class="llogon-button" type="button" value="登入">
+                    <input class="llogon-button" type="button" value="注册">
+                </form>
+            </div>
+    </div>
+
+    <script>
+        document.querySelector(".menu-links").addEventListener("click", e => {
+            console.log(e.target.tagName);
+        })
+        document.querySelector(".lmenuul").addEventListener("click", e => {
+            console.log(e.target.tagName);
+        })
+
+            //注册页面
+        document.getElementById("logon").addEventListener("click",function() {
+            document.querySelector(".llogon").classList.remove("close");
+        })
+
+        document.getElementById("logon-close").addEventListener("click",function() {
+            document.querySelector(".llogon").classList.add("close");
+        })
+
+            // 这是一个触发发送请求的事件处理函数
+                document.getElementsByClassName("llogon-button")[0].addEventListener("click", function () {
+            // 获取动态变化的变量值
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // 创建 XMLHttpRequest 对象
+            const xhr = new XMLHttpRequest();
+
+            // 设置请求方法和URL
+            xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
+            // 设置请求头
+            xhr.setRequestHeader("Content-Type", "application/json");
+            // 准备要发送的数据
+                    const data = {
+                        username,
+                        password
+                    };
+
+            // 发送数据给服务器
+            xhr.send(JSON.stringify(data));
+
+            // 设置请求的处理函数
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+            // 请求成功处理代码
+                    console.log(xhr.responseText);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,455 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(to right,#6cf,#baf);
+    min-height: 100vh;
+}
+
+/* 设置全局变量 */
+:root {
+    --body-color: #E4E9F7;
+    --shell-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+}
+
+.shell {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 180px;
+    padding: 10px 14px;
+    background-color: #0df;
+    z-index: 100;
+}
+
+.shell li {
+    height: 50px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.image,
+.icon {
+    min-width: 10px;
+    border-radius: 6px;
+}
+
+.icon {
+    min-width: 45px;
+    border-radius: 6px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 300 23px '';
+}
+
+.text,
+.icon {
+    color: var(--text-color);
+}
+
+.text {
+    font: 500 17px;
+    white-space: nowrap;
+}
+
+header {
+    position: relative;
+    background-color: #eee;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.image-text {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    margin-top: 2px;
+    font: 600 18px '';
+}
+
+.level {
+    font-size: 15px;
+    margin-top: -2px;
+    display: block;
+}
+
+.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image img {
+    width: 45px;
+    border-radius: 6px;
+    margin: 5px 10px;
+}
+
+.toggle {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: var(--primary-color);
+    color: var(--shell-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.toggle {
+    color: #ccc;
+}
+
+.shell.close.toggle {
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.shell li a {
+    list-style: none;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.shell li a:hover {
+    background-color: var(--primary-color);
+}
+
+.shell li a:hover .icon,
+.shell li a:hover .text {
+    color: var(--shell-color);
+}
+
+.acitve{
+    background-color: var(--primary-color);
+    color: var(--shell-color);
+}
+
+.menu-bar {
+    height: calc(100% - 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: scroll;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255,0.8);
+}
+
+.menu-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-links hr{
+    width: 80%;
+    margin: auto;
+}
+
+.bottom-content{
+    margin-bottom: 30px;
+}
+.lmenu-shouye{
+    position: fixed;
+    top: 0;
+    left: 180px;
+    height: 100%;
+    width: 300px;
+    background: var(--shell-color);
+    z-index: 100;
+}
+
+.lmenu-text{
+    margin: 50px 0 10px 10px;
+}
+
+.ltext{
+    color: #444;
+    font: 600 20px '';
+}
+
+.lmenu-shouye hr{
+    border: none;
+    width: 100%;
+    height: 2px;
+    background-image: linear-gradient(to right, #6cf,#baf);
+}
+
+.lmenuul{
+    list-style-type: none;
+    margin: 0 20px;
+}
+
+.lmenuul a{
+    text-decoration:none
+}
+
+.lmenuli{
+    margin-top: 20px;
+    border-radius: 8px;
+    padding: 20px;
+    color: #000;
+}
+
+.lmenuli:hover{
+    background-color: #0af;
+}
+
+.lmenuli-active{
+    background-color: #0af;
+}
+
+.content{
+    position: fixed;
+    top: 0;
+    left: 480px;
+    height: 100%;
+    width: calc(100% - 450px);
+    background: rgb(255, 255, 255,0);
+    z-index: 100;
+}
+
+.thead{
+    margin-bottom: 10px;
+}
+
+.thead-text{
+    color: #fff;
+    margin: 100px 0 50px 60px;
+}
+
+.thead-text h2{
+    margin-bottom: 10px;
+}
+
+.search input[type=text]{
+    width: 700px;
+    color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-left: 50px;
+    padding: 10px 20px;
+    background-color: rgb(255, 255, 255,0);
+    transition: all 0.3s ease;
+}
+
+.search input[type=text]:focus{
+    width: 900px;
+    outline: 3px solid #fff;
+    box-shadow: 1px 1px 10px 1px #fff;
+}
+
+.tbodyta{
+    list-style-type: none;
+    border-spacing: 50px 40px;
+    margin: 0 auto;
+}
+
+.tbodytr{
+    position: relative;
+}
+.tbodytd{
+    width: 400px;
+    height: 300px;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.tdhead{
+    width: 380px;
+    height: 140px;
+    border-radius: 8px;
+    position: absolute;
+    top: 10px;
+    overflow: hidden;
+    align-items: center;
+}
+.tdhead img{
+    width: 380px;
+    height: 140px;
+}
+
+.tdbody{
+    width: 380px;
+    height: 100px;
+    position: absolute;
+    top: 160px;
+    display: flex;
+}
+
+.tdbody-text{
+    color: #000;
+    font-size: 20px;
+    position: absolute;
+}
+
+.btext-font{
+    color: rgb(0, 0, 0,0.8);
+    font-size: 12px;
+    top: 30px;
+}
+
+.btext-m{
+    top: 50px;
+}
+
+.tdbody img{
+    width: 80px;
+    margin-right: 20px;
+}
+
+.tdfooter{
+    width: 380px;
+    height: 40px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.tdfooter input[type=botton]{
+    background-color: rgb(0, 200, 255, 0.8);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.llogon {
+    min-width: 100vh;
+    min-height: 100vh;
+    background-color: rgb(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    z-index: 110;
+    transition: all 0.3s ease;
+}
+
+.close {
+    opacity: 0;
+    z-index: 1;
+}
+
+.llogon-header {
+    width: 500px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px 10px 0 0;
+    position: absolute;
+    top: 200px;
+    padding-top: 60px;
+    background-image: url("../img/Bg4.jpg");
+    background-size: 500px;
+    background-position: 0 20%;
+}
+
+.llogon-header-text {
+    font: 600 50px "";
+}
+
+.llogon-header-close{
+    width: 30px;
+    height: 30px;
+    background-color: #0df;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.llogon-content {
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    top: 200px;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.llogon-text {
+    color: #fff;
+}
+
+.llogon-form {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.llogon-form input[type=text],
+.llogon-form input[type=password] {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #05f;
+    border-radius: 5px;
+    background-color: rgb(0, 204, 255, 0.6);
+    padding-left: 10px;
+    transition: all 0.3s ease;
+}
+
+.llogon-form input[type=text]:focus,
+.llogon-form input[type=password]:focus {
+    outline: 1px solid #0ff;
+    box-shadow: 1px 1px 10px 1px #fff;
+}
+
+.llogon-button {
+    width: 120px;
+    height: 30px;
+    background-color: #6cf;
+    border: 1px solid #0ff;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.llogon-form-text {
+    font: 1000 15px '';
+    color: #6cf;
+}
