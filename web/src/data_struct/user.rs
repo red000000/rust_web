@@ -51,7 +51,6 @@ impl SearchUserInfo {
             .unwrap()
             .query(SELECT_USER_USERNAME_BY_USERNAME, &[&self.get_username()])
             .unwrap();
-
         if row.len() == 0 {
             false
         } else {
