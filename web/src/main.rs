@@ -26,11 +26,11 @@ async fn main() {
 }
 #[test]
 fn p_test() {
-    use postgres::Client;
+    /*  use postgres::Client;
     use postgres::NoTls;
     use web::data_struct::*;
     use web::database_statement::*;
-    /*     client
+         client
     .execute(
         INSERT_ONE_USER,
         &[
