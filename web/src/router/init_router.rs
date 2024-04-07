@@ -1,6 +1,5 @@
 use crate::data_struct::*;
 use warp::Filter;
-
 pub fn _init_cert_key() -> (String, String) {
     let cert_path = "ssl/san_domain_com.crt";
     let key_path = "ssl/san_domain_com.key";
@@ -51,49 +50,11 @@ pub fn init_sign_in_router() -> impl Filter<Extract = impl warp::Reply, Error = 
         .and(warp::post())
         .and(warp::body::json())
         .map(|body: serde_json::Value| {
-            //返回一个什么b东西
+            //获取前端发送数据
             let sign_in_info: SignInInfo = serde_json::from_value(body).unwrap();
-            let info = sign_in_info.get_info();
-            print!("{}{}", info.0, info.1);
-            if sign_in_info.check_info() && sign_in_info.save_in_database() {
-                let success = SignInMessage::new("注册成功".to_string(), true);
-                warp::reply::json(&success)
-            } else {
-                let fail = SignInMessage::new("注册失败".to_string(), false);
-                warp::reply::json(&fail)
-            }
+            //检查并返回数据
+            sign_in_info.check_info()
         })
         .with(cors)
 }
-pub fn init_get_user_info_router(
-) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("api")
-        .and(warp::path("get_user_info"))
-        .and(warp::path::end())
-        .and(warp::get())
-        .and(warp::body::json())
-        .map(|body: serde_json::Value| {
-            let search_user_info: SearchUserInfo = serde_json::from_value(body).unwrap();
-            if search_user_info.check_database_by_username() {
-                let user_info = UserInfo::from_database(search_user_info.get_username());
-                warp::reply::json(&user_info)
-            } else {
-                let search_user_info_message =
-                    SearchUserInfoMessage::new("用户不存在".to_string(), false);
-                warp::reply::json(&search_user_info_message)
-            }
-        })
-        .with(cors)
-}
-pub fn _video_test() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("mp4")
-        .and(warp::path::end())
-        .and(warp::get())
-        .and(warp::fs::file("video.mp4"))
-        .map(|reply: warp::filters::fs::File| {
-            warp::reply::with_header(reply, "Content-Type", "video/mp4")
-        })
-        .with(cors)
-}
+
