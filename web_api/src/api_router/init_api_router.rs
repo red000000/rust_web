@@ -14,17 +14,6 @@ pub fn init_get_user_info_router(
         })
         .with(cors)
 }
-//获取省份对应的城市信息
-pub fn init_get_province_cities_info_router(
-) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("api")
-        .and(warp::path("get_province_cities_info"))
-        .and(warp::path::end())
-        .and(warp::get())
-        .map(|| warp::reply())
-        .with(cors)
-}
 pub fn _video_test() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let cors = warp::cors().allow_any_origin();
     warp::path("mp4")

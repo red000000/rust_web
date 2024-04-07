@@ -59,8 +59,8 @@ impl SignInInfo {
             false
         }
     }
-    //总检查
-    pub fn check_info(&self) -> warp::reply::Json {
+    //总检查并且向前端返回数据
+    pub fn check_and_return_info(&self) -> warp::reply::Json {
         if !self.check_input() {
             let fail=SignInMessage::new("登录失败，用户名或密码不符合要求".to_string(),SIGN_IN_FAILED_BY_INPUT, false);
             warp::reply::json(&fail)

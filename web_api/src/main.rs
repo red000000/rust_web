@@ -12,10 +12,7 @@ async fn main() {
     pretty_env_logger::try_init().unwrap();
     let log = warp::log("WEB_API_LOG");
     let get_user_info_router = init_get_user_info_router();
-    let get_province_cities_info_router = init_get_province_cities_info_router();
-    let api_routers = get_user_info_router
-        .with(log)
-        .or(get_province_cities_info_router.with(log));
+    let api_routers = get_user_info_router.with(log);
     warp::serve(api_routers).run(([127, 0, 0, 1], 8081)).await;
 }
 #[tokio::test]

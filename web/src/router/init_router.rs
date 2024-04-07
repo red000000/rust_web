@@ -22,17 +22,8 @@ pub fn init_sign_up_router() -> impl Filter<Extract = impl warp::Reply, Error = 
         .map(|body: serde_json::Value| {
             //获取前端发送数据
             let sign_up_info: SignUpInfo = serde_json::from_value(body).unwrap();
-            //打印测试
-            let info = sign_up_info.get_info();
-            print!("{}{}", info.0, info.1);
             //检查并返回数据
-            if sign_up_info.check_user_username_and_password() {
-                let success = SignUpMessage::new("登录成功".to_string(), true);
-                warp::reply::json(&success)
-            } else {
-                let fail = SignUpMessage::new("登录失败".to_string(), false);
-                warp::reply::json(&fail)
-            }
+            sign_up_info.check_and_return_info()
         })
         .with(cors)
 }
@@ -53,7 +44,7 @@ pub fn init_sign_in_router() -> impl Filter<Extract = impl warp::Reply, Error = 
             //获取前端发送数据
             let sign_in_info: SignInInfo = serde_json::from_value(body).unwrap();
             //检查并返回数据
-            sign_in_info.check_info()
+            sign_in_info.check_and_return_info()
         })
         .with(cors)
 }
