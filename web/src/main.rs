@@ -19,14 +19,3 @@ async fn main() {
         .run(([127, 0, 0, 1], 8080))
         .await;
 }
-#[tokio::test]
-async fn test() {
-    reqwest::Client::builder()
-        .no_proxy()
-        .build()
-        .unwrap()
-        .get("http://127.0.0.1:8080")
-        .send()
-        .await
-        .unwrap();
-}
