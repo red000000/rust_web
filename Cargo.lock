@@ -1838,6 +1838,7 @@ dependencies = [
  "log",
  "postgres",
  "pretty_env_logger",
+ "reqwest",
  "serde",
  "serde_json",
  "tokio",

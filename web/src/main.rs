@@ -5,7 +5,7 @@ async fn main() {
     //log初始化
     std::env::set_var("RUST_LOG", "info");
     pretty_env_logger::try_init_timed().expect("Failed to init logger");
-    let log = warp::log("WEB_LOG");
+    let log = warp::log("RUST_LOG");
     //初始化证书和私钥
     //let (cert_path, key_path) = init_cert_key();
     let sign_up_router = init_sign_up_router();
@@ -18,4 +18,15 @@ async fn main() {
         //.key_path(key_path)
         .run(([127, 0, 0, 1], 8080))
         .await;
+}
+#[tokio::test]
+async fn test() {
+    reqwest::Client::builder()
+        .no_proxy()
+        .build()
+        .unwrap()
+        .get("http://127.0.0.1:8080")
+        .send()
+        .await
+        .unwrap();
 }

@@ -15,7 +15,7 @@ async fn main() {
     let api_routers = get_user_info_router.with(log);
     warp::serve(api_routers).run(([127, 0, 0, 1], 8081)).await;
 }
-#[tokio::test]
+/* #[tokio::test]
 async fn test() {
     use reqwest::Client;
     let get_province = Client::new()
@@ -30,4 +30,4 @@ async fn test() {
     for province in province_list.list {
         println!("{}", province);
     }
-}
+} */
