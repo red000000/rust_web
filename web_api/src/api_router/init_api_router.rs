@@ -1,3 +1,5 @@
+use crate::upload::*;
+
 use warp::Filter;
 use web::data_struct::*;
 pub fn init_get_user_info_router(
@@ -38,7 +40,31 @@ pub fn init_upload_user_profile_photo_router(
                     }
                 }
             }
-            warp::reply()
+            let dir = ".";
+            let mut flag = false;
+            // 获取目录中的文件列表
+            let dir = std::fs::read_dir(dir).unwrap();
+            for file in dir {
+                let file = file.unwrap();
+                if file.file_name() == "" {
+                    flag = true;
+                }
+            }
+            if flag {
+                let success = UploadUserProfilePhotoMessage::new(
+                    "上传成功".to_string(),
+                    UPLOAD_PROFILE_PHOTO_SUCCESS,
+                    true,
+                );
+                warp::reply::json(&success)
+            } else {
+                let fail = UploadUserProfilePhotoMessage::new(
+                    "上传失败".to_string(),
+                    UPLOAD_PROFILE_PHOTO_FAILED,
+                    false,
+                );
+                warp::reply::json(&fail)
+            }
         })
         .with(cors)
 }

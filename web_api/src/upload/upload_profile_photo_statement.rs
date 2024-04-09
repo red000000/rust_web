@@ -1,0 +1,4 @@
+//成功
+pub const UPLOAD_PROFILE_PHOTO_SUCCESS: u32 = 0;
+//失败
+pub const UPLOAD_PROFILE_PHOTO_FAILED: u32 = 1;

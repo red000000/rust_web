@@ -1,5 +1,4 @@
-mod api_router;
-use api_router::*;
+use web_api::api_router::*;
 use warp::Filter;
 #[derive(serde::Deserialize, serde::Serialize)]
 struct ProvinceList {
