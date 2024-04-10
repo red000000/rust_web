@@ -86,7 +86,7 @@ impl SignInInfo {
                     &self.country,
                     &self.province,
                     &self.city,
-                    &"",//用户头像url之后根据用户上传再获取
+                    &"".to_string(),//用户头像url之后根据用户上传再获取
                 ],
             )
             .is_ok()

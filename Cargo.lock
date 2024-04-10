@@ -1887,7 +1887,6 @@ name = "web"
 version = "0.1.0"
 dependencies = [
  "log",
- "postgres",
  "pretty_env_logger",
  "serde",
  "serde_json",
@@ -1911,13 +1910,13 @@ version = "0.1.0"
 dependencies = [
  "futures",
  "log",
+ "postgres",
  "pretty_env_logger",
  "reqwest",
  "serde",
  "serde_json",
  "tokio",
  "warp",
- "web",
 ]
 
 [[package]]

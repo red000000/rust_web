@@ -1,5 +1,10 @@
+页面信息
+登录页面路由:http://127.0.0.1:8080/sign_up
+注册页面路由:http://127.0.0.1:8081/sign_in
+主页页面路由:http://127.0.0.1:8081/index
+
 登录信息
-路由:http://127.0.0.1:8080/sign_up
+路由:http://127.0.0.1:8081/api/sign_up
 请求方式:POST
 前端发送信息:
 SignUpInfo:{
@@ -21,7 +26,7 @@ SignUpInfo:{
     }
 
 注册信息
-路由:http://127.0.0.1:8080/sign_in
+路由:http://127.0.0.1:8081/api/sign_in
 请求方式:POST
 前端发送信息:
 SignInInfo:{
@@ -77,10 +82,13 @@ SignInInfo:{
 路由:http://127.0.0.1:8081/api/upload_user_profile_photo
 请求方式:POST
 前端发送信息:
+//form
     UploadUserProfilePhoto{
         username:string,
-        profile_photo:string,
+        profile_photo_url:string,
     }
+    multipart/form-data格式文件(内部为图片格式)
+
 后端发送信息:
     成功:
     UploadUserProfilePhotoMessage:{

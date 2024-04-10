@@ -14,5 +14,5 @@ log = "0.4"
 pretty_env_logger="0.5"
 reqwest = {version = "0.12.3",features = ["json","multipart","stream"]}
 
-web={path = "../web"}
 futures = "0.3.30"
+postgres = "0.19.7"

@@ -1,5 +1,5 @@
-use web_api::api_router::*;
 use warp::Filter;
+use web_api::api_router::*;
 #[derive(serde::Deserialize, serde::Serialize)]
 struct ProvinceList {
     message: String,
@@ -24,7 +24,6 @@ async fn test() {
     use reqwest::multipart;
     use std::fs::File;
     use std::io::Read;
-
     // 读取图片文件
     let mut file = File::open("test.jpg").unwrap();
     let mut buffer = Vec::new();
