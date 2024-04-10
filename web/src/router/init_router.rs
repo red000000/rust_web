@@ -6,8 +6,8 @@ pub fn _init_cert_key() -> (String, String) {
     (cert_path.to_string(), key_path.to_string())
 }
 
-pub fn init_sign_up_router() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
-{
+pub fn init_sign_up_router(
+) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     //cors
     let cors = warp::cors()
         .allow_any_origin()
@@ -27,8 +27,8 @@ pub fn init_sign_up_router() -> impl Filter<Extract = impl warp::Reply, Error = 
         })
         .with(cors)
 }
-pub fn init_sign_in_router() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
-{
+pub fn init_sign_in_router(
+) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     //cors需要修改，等待数据类型确定
     let cors = warp::cors()
         .allow_any_origin()
@@ -48,4 +48,3 @@ pub fn init_sign_in_router() -> impl Filter<Extract = impl warp::Reply, Error = 
         })
         .with(cors)
 }
-

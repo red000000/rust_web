@@ -9,12 +9,14 @@ SignUpInfo:{
 后端返回值:
     成功:
     SignUpMessage:{
-        message:"登录成功!",
+        message:string,
+        message_type:u32,(0)(大于0,具体情况在sign_up_statement.rs中定义)
         flag:true,
     }
     失败:
     SignUpMessage:{
-        message:"登录失败!",
+        message:string,
+        message_type:u32,
         flag:false
     }
 
@@ -68,5 +70,27 @@ SignInInfo:{
     失败:
     SearchUserInfoMessage:{
         message:"用户不存在!",
+        flag:false,
+    }
+
+上传用户头像api
+路由:http://127.0.0.1:8081/api/upload_user_profile_photo
+请求方式:POST
+前端发送信息:
+    UploadUserProfilePhoto{
+        username:string,
+        profile_photo:string,
+    }
+后端发送信息:
+    成功:
+    UploadUserProfilePhotoMessage:{
+        message:string,
+        message_type:u32,(0)
+        flag:true,
+    }
+    失败:
+    UploadUserProfilePhotoMessage:{
+        message:string,
+        message_type:u32,(大于0,具体情况在upload_user_profile_photo_statement.rs中定义)
         flag:false,
     }

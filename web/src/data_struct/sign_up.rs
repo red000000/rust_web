@@ -1,5 +1,7 @@
 use crate::database_statement::*;
 use serde::{Deserialize, Serialize};
+
+use super::{SIGN_UP_FAILED, SIGN_UP_SUCCESS};
 #[derive(Serialize, Deserialize)]
 pub struct SignUpInfo {
     username: String,
@@ -8,6 +10,7 @@ pub struct SignUpInfo {
 #[derive(Serialize, Deserialize)]
 pub struct SignUpMessage {
     message: String,
+    message_type: u32,
     flag: bool,
 }
 
@@ -51,16 +54,20 @@ impl SignUpInfo {
     //总检查并向前端返回数据
     pub fn check_and_return_info(&self) -> warp::reply::Json {
         if self.check_user_username_and_password() {
-            let success = SignUpMessage::new("登录成功".to_string(), true);
+            let success = SignUpMessage::new("登录成功".to_string(),SIGN_UP_SUCCESS, true);
             warp::reply::json(&success)
         } else {
-            let fail = SignUpMessage::new("登录失败".to_string(), false);
+            let fail = SignUpMessage::new("登录失败".to_string(),SIGN_UP_FAILED, false);
             warp::reply::json(&fail)
         }
     }
 }
 impl SignUpMessage {
-    pub fn new(message: String, flag: bool) -> Self {
-        SignUpMessage { message, flag }
+    pub fn new(message: String, message_type: u32, flag: bool) -> Self {
+        SignUpMessage {
+            message,
+            message_type,
+            flag,
+        }
     }
 }
