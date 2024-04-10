@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test3</title>
+    <title>登入/注册</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
 
         html {
             font-size: 10px;
-            background: linear-gradient(to right, rgb(0, 0, 0), rgb(213, 241, 4));
+            background: linear-gradient(to right, #ecf, #8cf);
             transition: all 0.5s ease;
         }
 
@@ -29,7 +29,7 @@
 
         ::selection {
             color: #fff;
-            background-color: rgb(0, 0, 0);
+            background-color: #6cf;
         }
 
         .logon {
@@ -51,7 +51,7 @@
             position: relative;
             width: 35%;
             height: 100%;
-            background-color: rgb(0, 0, 0);
+            background-color: skyblue;
         }
 
         .logon .left::before {
@@ -61,6 +61,7 @@
             height: 100%;
             background-image: url("../img/Bg4.jpg");
             background-size: cover;
+            background-position: 20% 0;
             opacity: 80%;
         }
 
@@ -80,7 +81,7 @@
 
         .logon .right-1 h4 {
             font-size: 25px;
-            color: rgb(0, 0, 0);
+            color: #6cf;
             margin-top: 20px;
         }
 
@@ -92,8 +93,8 @@
             margin-top: 10%;
             padding: 10px 0 0 15px;
             border: none;
-            border-bottom: 1px solid rgb(0, 0, 0);
-            color: rgb(0, 0, 0);
+            border-bottom: 1px solid #6cf;
+            color: #6cf;
             background-color: rgb(0, 0, 0, 0);
         }
 
@@ -165,39 +166,54 @@
             padding: 10px 0 0 15px;
             border: none;
             border-bottom: 1px solid #6cf;
-            color: rgb(0, 0, 0);
+            color: #6cf;
             background-color: rgb(0, 0, 0, 0);
         }
 
         .right-2 .form-text {
-        .right-2 .form-text {
             font: 600 20px '';
-            color: rgb(0, 0, 0);
+            color: #6cf;
             margin-top: 12%;
         }
 
+        .right-2 .text-sex {
+            font: 600 20px '';
+            color: #6cf;
+            margin-top: 5%;
+            margin-right: 5%;
+        }
+
+        .right-2 .text-address {
+            font: 600 20px '';
+            color: #6cf;
+        }
+
+
         .logon .right-2 form .bir {
-        .logon .right-2 form .bir {
-            width: 20%;
+            width: 25%;
             margin-top: 10%;
-            margin-bottom: 10%;
         }
 
         .right-2 .address {
             width: 25%;
+            height: 20px;
             border: 1px solid #6cf;
             color: #6cf;
+            margin-top: 1%;
+            cursor: pointer;
         }
 
         .right-2 .sex {
-        .right-2 .sex {
-            width: 25%;
+            width: 20%;
+            height: 20px;
+            margin: 6% 50% 5% 0;
             border: 1px solid #ecf;
             color: #6cf;
             background-color: rgb(255, 255, 255, 60%);
+            transform: translateX(-25%);
+            cursor: pointer;
         }
 
-        .right-2 .submit {
         .right-2 .submit {
             width: 80%;
             height: 10%;
@@ -206,20 +222,23 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            margin-top: 5%;
+            margin-top: 10%;
             cursor: pointer;
         }
 
         .right-2 .button {
-        .right-2 .button {
             width: 30%;
-            height: 10%;
-            background-color: #ecf;
+            height: 8%;
+            background-color: #6cf;
             color: #fff;
             border: none;
             border-radius: 5px;
-            margin: 10% 0 0 50%;
+            margin: 5% 0 0 50%;
             cursor: pointer;
+        }
+
+        .right-2 .button:hover {
+            box-shadow: 0 0 1px 2px #6cf;
         }
     </style>
 </head>
@@ -230,10 +249,10 @@
         </div>
         <div class="right-1" v-show="r1">
             <h4>Welcome</h4>
-            <form>
+            <form action="首页.html">
                 <input class="acc" id="username" type="text" placeholder="用户名">
                 <input class="acc" id="password" type="password" placeholder="密码">
-                <input class="Login" type="submit" value="Login">
+                <input class="Login" id="Login" type="submit" value="Login">
             </form>
             <div class="fn">
                 <a href="#" id="toright" @click="rt1">注册账户</a>
@@ -243,24 +262,63 @@
         <div class="right-2" v-show="r2">
             <form id="form-logon">
                 <input class="acc" type="text" id="logon-count" placeholder="用户名">
-                <input class="acc" type="text" id="logon-password" placeholder="密码">
+                <input class="acc" type="password" id="logon-password" placeholder="密码">
                 <span class="form-text">生日：</span>
                 <input class="acc bir" type="text" id="birthday-y" placeholder="年">
                 <input class="acc bir" type="text" id="birthday-m" placeholder="月">
                 <input class="acc bir" type="text" id="birthday-d" placeholder="日">
 
+                <span class="text-sex">性别：</span>
                 <select id="sex" class="sex">
-                    <option value="保密">保密</option>
+                    <option value="--">--</option>
                     <option value="男">男</option>
                     <option value="女">女</option>
                 </select>
+                <span class="text-address">地址：</span>
                 <select id="province" class="address">
                     <option value="--">--</option>
+                    <option value="北京">北京</option>
+                    <option value="天津">天津</option>
+                    <option value="河北省">河北省</option>
+                    <option value="山西省">山西省</option>
+                    <option value="内蒙古自治区">内蒙古自治区</option>
+                    <option value="辽宁省">辽宁省</option>
+                    <option value="吉林省">吉林省</option>
+                    <option value="黑龙江省">黑龙江省</option>
+                    <option value="上海">上海</option>
+                    <option value="江苏省">江苏省</option>
+                    <option value="浙江省">浙江省</option>
+                    <option value="安徽省">安徽省</option>
+                    <option value="福建省">福建省</option>
+                    <option value="江西省">江西省</option>
+                    <option value="山东省">山东省</option>
+                    <option value="河南省">河南省</option>
+                    <option value="湖北省">湖北省</option>
+                    <option value="湖南省">湖南省</option>
+                    <option value="广东省">广东省</option>
+                    <option value="广西壮族自治区">广西壮族自治区</option>
+                    <option value="海南省">海南省</option>
+                    <option value="重庆">重庆</option>
+                    <option value="四川省">四川省</option>
+                    <option value="贵州省">贵州省</option>
+                    <option value="云南省">云南省</option>
+                    <option value="西藏自治区">西藏自治区</option>
+                    <option value="陕西省">陕西省</option>
+                    <option value="甘肃省">甘肃省</option>
+                    <option value="青海省">青海省</option>
+                    <option value="宁夏回族自治区">宁夏回族自治区</option>
+                    <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                    <option value="台湾">台湾</option>
+                    <option value="香港特别行政区">香港特别行政区</option>
+                    <option value="澳门特别行政区">澳门特别行政区</option>
                 </select>
                 <select id="city" class="address">
                     <option value="--">--</option>
                 </select>
-                <input type="submit" value="注册" id="logon-button" class="submit" onclick="fn">
+                <select id="area" class="address">
+                    <option value="--">--</option>
+                </select>
+                <input type="submit" value="注册" id="logon-button" class="submit">
                 <input type="button" value="返回登入" id="backtologon" class="button" @click="rt2">
             </form>
         </div>
@@ -289,56 +347,38 @@
         });
 
         //注册post
-        const xhr3 = new XMLHttpRequest();
-        xhr3.open("post", "http://127.0.0.1:8080/sign_up/", true);
-        xhr3.setRequestHeader("Content-Type", "application/json");
+        document.getElementById("logon-button").addEventListener("click", function () {
+            const xhr = new XMLHttpRequest();
+            let username = document.getElementById("logon-count").value;
+            let password = document.getElementById("logon-password").value;
+            let birthdayy = document.getElementById("birthday-y").value;
+            let birthdaym = document.getElementById("birthday-m").value;
+            let birthdayd = document.getElementById("birthday-d").value;
+            let birthday = birthdayy + "年" + birthdaym + "月" + birthdayd + "日";
+            let sex = document.getElementById("sex").value;
+            let province = document.getElementById("province").value;
+            let city = document.getElementById("city").value;
+            let country = document.getElementById("area").value;
 
-        function fn() {
-            const username = document.getElementById("logon-count").value;
-            const password = document.getElementById("logon-password").value;
-            const birthdayy = document.getElementById("birthday-y").value;
-            const birthdaym = document.getElementById("birthday-m").value;
-            const birthdayd = document.getElementById("birthday-d").value;
-            const birthday = birthdayy + "年" + birthdaym + "月" + birthdayd + "日";
-            const sex = document.getElementById("sex").value;
-            const province = document.getElementById("province").value;
-            const city = document.getElementById("city").value;
-
-            console.log(username, password, birthday, sex, province, city);
-
+            xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
             const data = {
                 username,
                 password,
-                birthday,
                 sex,
+                birthday,
+                country,
                 province,
                 city
             };
-            xhr3.send(JSON.stringify(data));
-        }
 
-        xhr3.onreadystatechange = function () {
-            if (xhr3.readyState === 4 && xhr3.status === 200) {
-                console.log(xhr3.responseText);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
             }
-        }
-
-
-        //省份城市请求
-        const xhr = new XMLHttpRequest();
-        const logon = document.getElementById("toright");
-        xhr.open("get", "http://hmajax.itheima.net/api/province");
-        xhr.addEventListener("loadend", function () {
-            const d = JSON.parse(xhr.response);
-            const data = d.list;
-            for (i = 0; i < data.length; i++) {
-                const a = document.createElement("option");
-                a.text = data[i];
-                a.value = data[i];
-                document.getElementById("province").appendChild(a);
-            }
+            xhr.send(JSON.stringify(data));
         })
-        xhr.send();
 
         //城市请求
         document.getElementById("province").addEventListener("change", function () {
@@ -375,6 +415,57 @@
             xhr.send();
         })
 
+        //区查询
+
+        //清除原有数据
+        document.getElementById("province").addEventListener("change", function () {
+            let count = document.getElementById("area").childNodes.length;
+            const select = document.getElementById("area");
+            if (count > 1) {
+                while (count > 1) {
+                    select.removeChild(select.childNodes[1]);
+                    count--;
+                }
+            }
+        })
+
+        //获取输入数据
+        document.getElementById("city").addEventListener("change", function () {
+            let pname = document.getElementById("province").value;
+            let cname = document.getElementById("city").value;
+            const qobj = {
+                pname,
+                cname
+            }
+            let p = new URLSearchParams(qobj);
+            let queryString = p.toString();
+            let url = "http://hmajax.itheima.net/api/area?" + queryString;
+
+            const xhr = new XMLHttpRequest;
+            xhr.open("get", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.addEventListener("loadend", function () {
+                const d = JSON.parse(xhr.response);
+                const data = d.list;
+                const select = document.getElementById("area");
+
+                let count = document.getElementById("area").childNodes.length;
+                if (count > 1) {
+                    while (count > 1) {
+                        select.removeChild(select.childNodes[1]);
+                        count--;
+                    }
+                }
+                for (i = 0; i < data.length; i++) {
+                    const a = document.createElement("option");
+                    a.text = data[i];
+                    a.value = data[i];
+                    document.getElementById("area").appendChild(a);
+                }
+            })
+            xhr.send();
+        })
+
         //背景颜色切换
         function bgchange() {
             const html = document.documentElement
@@ -385,44 +476,45 @@
                 'linear-gradient(to right, #f97794, #623aa2)'
             ]
             const image = img[Math.floor(Math.random() * img.length)];
-            console.log(image);
 
             html.style.background = image;
         }
 
-        // setInterval(bgchange, 3000);
+        setInterval(bgchange, 3000);
 
-        // 这是一个触发发送请求的事件处理函数
+        //登陆事件 Axios.XHR+Promise
+        function logonAxios(config) {
+            return new Promise((result, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open(config.method || "post", config.url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.addEventListener("loadend", () => {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        result(JSON.parse(xhr.response));
+                    } else {
+                        reject(new Error(xhr.response));
+                    }
+                })
+                xhr.send(JSON.stringify(config.data));
+            })
+        }
 
-        // 创建 XMLHttpRequest 对象
-        const xhr0 = new XMLHttpRequest();
-
-        document.getElementsByClassName("Login")[0].addEventListener("click", function () {
-            // 获取动态变化的变量值
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-
-            // 设置请求方法和URL
-            xhr0.open("POST", "http://127.0.0.1:8080/sign_up", true);
-            // 设置请求头
-            xhr0.setRequestHeader("Content-Type", "application/json");
-            // 准备要发送的数据
-            const data = {
-                username,
-                password
-            };
-            // 设置请求的处理函数
-            xhr0.onreadystatechange = function () {
-                if (xhr0.readyState === 4 && xhr0.status === 200) {
-                    // 请求成功处理代码
-                    console.log(xhr0.responseText);
+        document.getElementById("Login").addEventListener("click", function () {
+            logonAxios(
+                {
+                    method: "post",
+                    url: "http://127.0.0.1:8080/sign_up",
+                    data: {
+                        username: document.getElementById("username").value,
+                        password: document.getElementById("password").value
+                    }
                 }
-            }
-            // 发送数据给服务器
-            xhr0.send(JSON.stringify(data));
+            ).then(result => {
+                console.log(result);
+            }).catch(error => {
+                console.log(error);
+            })
         })
-
 
     </script>
 </body>
