@@ -23,10 +23,19 @@ pub struct SearchUserInfoMessage {
 
 impl UserInfo {
     //username设为主键,唯一,从数据库获取用户信息
-    pub fn from_database(username: String) -> Self {
-        let row = postgres::Client::connect(DATABASE_CONNECT_BY_EASY_CONFIG, postgres::NoTls)
-            .unwrap()
+    pub async fn from_database(username: String) -> Self {
+        let (client, connection) =
+            tokio_postgres::connect(DATABASE_CONNECT_BY_EASY_CONFIG, tokio_postgres::NoTls)
+                .await
+                .unwrap();
+        tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("连接数据库错误: {}", e);
+            }
+        });
+        let row = client
             .query_one(SELECT_USER_INFO_BY_USERNAME, &[&username])
+            .await
             .unwrap();
 
         UserInfo {
@@ -50,10 +59,21 @@ impl SearchUserInfo {
         self.username.clone()
     }
     //在数据库检查是否能找到用户,此处在大量数据时可能会有性能问题，后面考虑在路由中传入postgres::Client类型，一直保持与数据库的连接
-    fn check_database_by_username(&self) -> bool {
-        let row = postgres::Client::connect(DATABASE_CONNECT_BY_EASY_CONFIG, postgres::NoTls)
-            .unwrap()
+    async fn check_database_by_username(&self) -> bool {
+        let (client, connection) =
+            tokio_postgres::connect(DATABASE_CONNECT_BY_EASY_CONFIG, tokio_postgres::NoTls)
+                .await
+                .unwrap();
+        //处理连接错误
+        tokio::spawn(async move {
+            if let Err(e) = connection.await {
+                eprintln!("连接数据库错误: {}", e);
+            }
+        });
+
+        let row = client
             .query(SELECT_USER_USERNAME_BY_USERNAME, &[&self.get_username()])
+            .await
             .unwrap();
         if row.len() == 0 {
             false
@@ -61,10 +81,10 @@ impl SearchUserInfo {
             true
         }
     }
-    pub fn check_info(&self) -> warp::reply::Json {
+    pub async fn check_info(&self) -> warp::reply::Json {
         //检查是否能在数据库中找到用户并返回数据
-        if self.check_database_by_username() {
-            let user_info = UserInfo::from_database(self.get_username());
+        if self.check_database_by_username().await {
+            let user_info = UserInfo::from_database(self.get_username()).await;
             warp::reply::json(&user_info)
         } else {
             let search_user_info_message =

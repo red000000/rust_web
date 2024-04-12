@@ -18,10 +18,14 @@ pub fn init_sign_up_router(
 pub fn init_sign_in_router(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let cors = warp::cors().allow_any_origin();
-    warp::path("sign_up")
+    warp::path("sign_in")
         .and(warp::path::end())
         .and(warp::get())
-        .then(|| async { warp::reply() })
+        .map(|| {
+            let sign_in_html = std::fs::read_to_string("D:/project/rust_vscode/rust_web/face/luntan_files/html/登入注册.html")
+            .unwrap();
+            warp::reply::html(sign_in_html)
+        })
         .with(cors)
 }
 //主页页面路由

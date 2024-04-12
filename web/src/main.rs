@@ -19,3 +19,9 @@ async fn main() {
         .run(([127, 0, 0, 1], 8080))
         .await;
 }
+#[test]
+fn test() {
+    let sign_in_html = std::fs::read_to_string("D:/project/rust_vscode/rust_web/face/luntan_files/html/登入注册.html")
+                .unwrap();
+            println!("{}", sign_in_html);
+}

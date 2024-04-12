@@ -1,4 +1,5 @@
 use crate::data_struct::*;
+use std::vec;
 use warp::Filter;
 
 pub fn init_api_sign_up_router(
@@ -15,11 +16,11 @@ pub fn init_api_sign_up_router(
         .and(warp::path::end())
         .and(warp::post())
         .and(warp::body::json())
-        .map(|body: serde_json::Value| {
+        .then(|body: serde_json::Value| async {
             //获取前端发送数据
             let sign_up_info: SignUpInfo = serde_json::from_value(body).unwrap();
             //检查并返回数据
-            sign_up_info.check_and_return_info()
+            sign_up_info.check_and_return_info().await
         })
         .with(cors)
 }
@@ -29,19 +30,17 @@ pub fn init_api_sign_in_router(
     let cors = warp::cors()
         .allow_any_origin()
         .allow_headers(vec!["Content-Type"])
-        .allow_method("POST")
-        .max_age(100); //100秒过期时间
-
+        .allow_methods(vec!["POST"]);
     warp::path("api")
         .and(warp::path("sign_in"))
         .and(warp::path::end())
         .and(warp::post())
         .and(warp::body::json())
-        .map(|body: serde_json::Value| {
+        .then(|body: serde_json::Value| async {
             //获取前端发送数据
             let sign_in_info: SignInInfo = serde_json::from_value(body).unwrap();
             //检查并返回数据
-            sign_in_info.check_and_return_info()
+            sign_in_info.check_and_return_info().await
         })
         .with(cors)
 }
@@ -54,9 +53,9 @@ pub fn init_get_user_info_router(
         .and(warp::path::end())
         .and(warp::get())
         .and(warp::body::json())
-        .map(|body: serde_json::Value| {
+        .then(|body: serde_json::Value| async {
             let search_user_info: SearchUserInfo = serde_json::from_value(body).unwrap();
-            search_user_info.check_info()
+            search_user_info.check_info().await
         })
         .with(cors)
 }
@@ -77,20 +76,21 @@ pub fn init_upload_user_profile_photo_router(
             |body: serde_json::Value, form: warp::multipart::FormData| async {
                 let mut form = form;
                 let mut filenames = Vec::new();
+                let mut filepath = String::new();
                 let upload_user_profile_photo: UploadUserProfilePhoto =
                     serde_json::from_value(body).unwrap();
                 while let Some(mut part) = form.try_next().await.unwrap() {
                     if let Some(filename) = part.filename() {
                         filenames.push(filename.to_string());
                         // 提取文件名并保存文件到磁盘
-                        let filepath = format!("写入测试/{}", filename);
-                        let mut file = tokio::fs::File::create(filepath).await.unwrap();
+                        filepath = format!("写入测试/{}", filename);
+                        let mut file = tokio::fs::File::create(&filepath).await.unwrap();
                         while let Some(chunk) = part.data().await {
                             file.write_all_buf(&mut chunk.unwrap()).await.unwrap();
                         }
                     }
                 }
-                upload_user_profile_photo.check_and_return_info(filenames, "".to_string())
+                upload_user_profile_photo.check_and_return_info(filenames, filepath)
             },
         )
         .with(cors)
