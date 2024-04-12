@@ -252,7 +252,7 @@
             <form action="首页.html">
                 <input class="acc" id="username" type="text" placeholder="用户名">
                 <input class="acc" id="password" type="password" placeholder="密码">
-                <input class="Login" id="Login" type="submit" value="Login">
+                <input class="Login" id="Login" type="submit" value="Login" @click.prevent>
             </form>
             <div class="fn">
                 <a href="#" id="toright" @click="rt1">注册账户</a>
@@ -318,13 +318,14 @@
                 <select id="area" class="address">
                     <option value="--">--</option>
                 </select>
-                <input type="submit" value="注册" id="logon-button" class="submit">
+                <input type="submit" value="注册" id="logon-button" class="submit" @click.prevent>
                 <input type="button" value="返回登入" id="backtologon" class="button" @click="rt2">
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
 
         //登录注册切换
@@ -346,7 +347,7 @@
             }
         });
 
-        //注册post
+        //注册
         document.getElementById("logon-button").addEventListener("click", function () {
             const xhr = new XMLHttpRequest();
             let username = document.getElementById("logon-count").value;
@@ -360,8 +361,8 @@
             let city = document.getElementById("city").value;
             let country = document.getElementById("area").value;
 
-            xhr.open("POST", "http://127.0.0.1:8080/sign_up", true);
-            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.open("post", "http://127.0.0.1:8081/api/sign_in", true);
+            xhr.setRequestHeader("Content-Type", "plication/json");
             const data = {
                 username,
                 password,
@@ -374,7 +375,7 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText);
+                    console.log(xhr.response);
                 }
             }
             xhr.send(JSON.stringify(data));
@@ -490,7 +491,8 @@
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.addEventListener("loadend", () => {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        result(JSON.parse(xhr.response));
+                        //成功获取用户信息
+                        userif(config.username);
                     } else {
                         reject(new Error(xhr.response));
                     }
@@ -499,11 +501,32 @@
             })
         }
 
+        //获取用户信息
+        function userif(config) {
+            axios({
+                method: "get",
+                url: "http://127.0.0.1:8081/api/get_user_info",
+                params: {
+                    username: config.username
+                }
+            }).then(result => {
+                console.log(result);
+                // localStorage.setItem("sex", "");
+                // localStorage.setItem("birthday", "");
+                // localStorage.setItem("province", "");
+                // localStorage.setItem("city", "");
+                // localStorage.setItem("countury", "");
+                // localStorage.setItem("status", true);
+            }).catch(error => {
+                console.dir(error);
+            })
+        }
+
         document.getElementById("Login").addEventListener("click", function () {
             logonAxios(
                 {
                     method: "post",
-                    url: "http://127.0.0.1:8080/sign_up",
+                    url: "http://127.0.0.1:8081/api/sign_up",
                     data: {
                         username: document.getElementById("username").value,
                         password: document.getElementById("password").value
