@@ -12,10 +12,13 @@ async fn main() {
     let log = warp::log("WEB_API_LOG");
     let get_user_info_router = init_get_user_info_router();
     let upload_user_profile_photo_router = init_upload_user_profile_photo_router();
-    let api_sign_in=init_api_sign_in_router();
+    let api_sign_in_router = init_api_sign_in_router();
+    let api_sign_up_router = init_api_sign_up_router();
     let api_routers = get_user_info_router
         .with(log)
-        .or(upload_user_profile_photo_router.with(log)).or(api_sign_in.with(log));
+        .or(upload_user_profile_photo_router.with(log))
+        .or(api_sign_in_router.with(log))
+        .or(api_sign_up_router.with(log));
     warp::serve(api_routers).run(([127, 0, 0, 1], 8081)).await;
 }
 
