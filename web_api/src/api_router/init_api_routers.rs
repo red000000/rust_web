@@ -30,7 +30,7 @@ pub fn init_api_sign_in_router(
     let cors = warp::cors()
         .allow_any_origin()
         .allow_headers(vec!["Content-Type"])
-        .allow_methods(vec!["POST"]);
+        .allow_method("POST");
     warp::path("api")
         .and(warp::path("sign_in"))
         .and(warp::path::end())
