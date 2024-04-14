@@ -1,8 +1,9 @@
-use crate::data_struct::*;
-use std::vec;
+use crate::{data_struct::*, database_struct::DbPool};
+use std::{sync::Arc, vec};
 use warp::Filter;
 
 pub fn init_api_sign_up_router(
+    pool: Arc<DbPool>,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     //cors
     let cors = warp::cors()
@@ -16,36 +17,46 @@ pub fn init_api_sign_up_router(
         .and(warp::path::end())
         .and(warp::post())
         .and(warp::body::json())
-        .then(|body: serde_json::Value| async {
-            //获取前端发送数据
-            let sign_up_info: SignUpInfo = serde_json::from_value(body).unwrap();
-            //检查并返回数据
-            sign_up_info.check_and_return_info().await
+        .then(move |body: serde_json::Value| {
+            let pool = Arc::clone(&pool);
+            async move {
+                //获取前端发送数据
+                let sign_up_info: SignUpInfo = serde_json::from_value(body).unwrap();
+                let sign_up = SignUp::new(sign_up_info, pool); //创建 SignUp 结构体实例
+                                                               //检查并返回数据
+                sign_up.check_and_return_info().await
+            }
         })
         .with(cors)
 }
 pub fn init_api_sign_in_router(
+    pool: Arc<DbPool>,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    //cors需要修改，等待数据类型确定
-    let cors = warp::cors()
+    let cors = warp::cors() // 配置 CORS
         .allow_any_origin()
         .allow_headers(vec!["Content-Type"])
-        .allow_method("POST");
+        .allow_methods(vec!["POST"]);
+
     warp::path("api")
         .and(warp::path("sign_in"))
         .and(warp::path::end())
         .and(warp::post())
         .and(warp::body::json())
-        .then(|body: serde_json::Value| async {
-            //获取前端发送数据
-            let sign_in_info: SignInInfo = serde_json::from_value(body).unwrap();
-            //检查并返回数据
-            sign_in_info.check_and_return_info().await
+        .then(move |body: serde_json::Value| {
+            let pool = Arc::clone(&pool);
+            // 使用 move 来确保 pool 被捕获
+            // 再次克隆 pool，确保每个请求都有自己的 pool 引用
+            async move {
+                let sign_in_info: SignInInfo = serde_json::from_value(body).unwrap(); // 解析登录信息
+                let sign_in = SignIn::new(sign_in_info, pool); // 创建 SignIn 结构体实例
+                sign_in.check_and_return_info().await // 检查登录信息并返回
+            }
         })
         .with(cors)
 }
 
 pub fn init_get_user_info_router(
+    pool: Arc<DbPool>,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let cors = warp::cors().allow_any_origin();
     warp::path("api")
@@ -53,9 +64,13 @@ pub fn init_get_user_info_router(
         .and(warp::path::end())
         .and(warp::get())
         .and(warp::body::json())
-        .then(|body: serde_json::Value| async {
-            let search_user_info: SearchUserInfo = serde_json::from_value(body).unwrap();
-            search_user_info.check_info().await
+        .then(move |body: serde_json::Value| {
+            let pool = Arc::clone(&pool);
+            async move {
+                let search_user_info: SearchUserInfo = serde_json::from_value(body).unwrap();
+                let search_user = SearchUser::new(search_user_info, pool);
+                search_user.check_info_and_return().await
+            }
         })
         .with(cors)
 }

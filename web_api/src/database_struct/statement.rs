@@ -1,5 +1,5 @@
 //简单与数据库建立连接语句
-pub const DATABASE_CONNECT_BY_EASY_CONFIG: &str =
+pub const CONNECT_DATABASE_BY_EASY_CONFIG: &str =
     "user=postgres password='password' dbname=postgres hostaddr=127.0.0.1 port=5432";
 
 //创建用户表语句
