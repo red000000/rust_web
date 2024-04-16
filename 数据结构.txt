@@ -1,7 +1,8 @@
 页面信息
-登录页面路由:http://127.0.0.1:8080/sign_up
-注册页面路由:http://127.0.0.1:8081/sign_in
-主页页面路由:http://127.0.0.1:8081/index
+注册与登录页面路由:http://127.0.0.1:8080/static/sign_in_and_up
+主页页面路由:http://127.0.0.1:8080/static/index
+用户信息界面路由:http://127.0.0.1:8080/static/user_info
+
 
 登录信息
 路由:http://127.0.0.1:8081/dynamic/api/sign_up

@@ -23,7 +23,8 @@
             const fileInput = document.getElementById('fileInput');
             const file = fileInput.files[0];
             let fileBlob = new Blob([file], { type: 'application/json' });
-            formData.append('photo', file);
+            formData.append('photo', fileBlob);
+            
             try {
                 const response = await fetch('http://127.0.0.1:8080/static/api/upload_user_profile_photo', {
                     method: 'POST',
