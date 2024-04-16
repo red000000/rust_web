@@ -12,7 +12,8 @@ pub fn init_api_sign_up_router(
         .allow_method("POST")
         .max_age(100); //100秒过期时间
 
-    warp::path("api")
+    warp::path("dynamic")
+        .and(warp::path("api"))
         .and(warp::path("sign_up"))
         .and(warp::path::end())
         .and(warp::post())
@@ -37,7 +38,8 @@ pub fn init_api_sign_in_router(
         .allow_headers(vec!["Content-Type"])
         .allow_methods(vec!["POST"]);
 
-    warp::path("api")
+    warp::path("dynamic")
+        .and(warp::path("api"))
         .and(warp::path("sign_in"))
         .and(warp::path::end())
         .and(warp::post())
@@ -59,7 +61,8 @@ pub fn init_get_user_info_router(
     pool: Arc<DbPool>,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let cors = warp::cors().allow_any_origin();
-    warp::path("api")
+    warp::path("dynamic")
+        .and(warp::path("api"))
         .and(warp::path("get_user_info"))
         .and(warp::path::end())
         .and(warp::get())
@@ -81,7 +84,9 @@ pub fn init_upload_user_profile_photo_url_router(
         .allow_any_origin()
         .allow_headers(vec!["Content-Type"])
         .allow_method("POST");
-    warp::path("api")
+    
+    warp::path("dynamic")
+        .and(warp::path("api"))
         .and(warp::path("upload_user_profile_photo_url"))
         .and(warp::path::end())
         .and(warp::post())

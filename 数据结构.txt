@@ -4,7 +4,7 @@
 主页页面路由:http://127.0.0.1:8081/index
 
 登录信息
-路由:http://127.0.0.1:8081/api/sign_up
+路由:http://127.0.0.1:8081/dynamic/api/sign_up
 请求方式:POST
 前端发送信息:
 SignUpInfo:{
@@ -26,7 +26,7 @@ SignUpInfo:{
     }
 
 注册信息
-路由:http://127.0.0.1:8081/api/sign_in
+路由:http://127.0.0.1:8081/dynamic/api/sign_in
 请求方式:POST
 前端发送信息:
 SignInInfo:{
@@ -54,7 +54,7 @@ SignInInfo:{
 
 
 请求用户信息api
-路由:http://127.0.0.1:8081/api/get_user_info
+路由:http://127.0.0.1:8081/dynamic/api/get_user_info
 请求方式:GET
 前端发送信息:
     SearchUserInfo{
@@ -79,17 +79,20 @@ SignInInfo:{
     }
 
 上传用户头像
-路由:http://127.0.0.1:8080/upload_user_profile_photo
+路由:http://127.0.0.1:8080/static/api/upload_user_profile_photo
 请求方式:POST
 前端发送信息:
 
-一个multipart/form-data编码的表单,内部包括:
+一个multipart/form-data编码的表单,内部包括两个Blob块:
 
     UploadUserProfilePhoto{
         username:string,
         profile_photo_url:string,
     }
-    multipart/form-data格式文件(jpeg图片格式,也可以是jpg)
+    type:application/json
+
+    图像文件二进制数据
+    type:multipart/form-data
 
 后端发送信息:
     成功:

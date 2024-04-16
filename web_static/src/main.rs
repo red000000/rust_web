@@ -1,4 +1,3 @@
-
 use warp::Filter;
 use web::router::*;
 #[tokio::main]
@@ -12,9 +11,12 @@ async fn main() {
     let sign_up_router = init_sign_up_router();
     let sign_in_router = init_sign_in_router();
     let upload_user_profile_photo_router = init_upload_user_profile_photo_router();
+
+    let api_upload_user_profile_photo_router = init_api_upload_user_profile_photo_router();
     let routers = sign_up_router.with(log).or(sign_in_router
         .with(log)
-        .or(upload_user_profile_photo_router.with(log)));
+        .or(upload_user_profile_photo_router.with(log))
+        .or(api_upload_user_profile_photo_router.with(log)));
 
     warp::serve(routers)
         //.tls()

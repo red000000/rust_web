@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "web",
-    "web_api"
+    "web_dynamic",
+    "web_static"
 ]
