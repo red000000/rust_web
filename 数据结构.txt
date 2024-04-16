@@ -110,7 +110,7 @@ SignInInfo:{
 
 //静态服务器使用路由,与前端无关
 上传用户头像url api
-路由:http://127.0.0.1:8081/api/upload_user_profile_photo_url
+路由:http://127.0.0.1:8081/dynamic/api/upload_user_profile_photo_url
 请求方式:POST
 静态后端发送信息:
     UploadUserProfilePhoto{
