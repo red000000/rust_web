@@ -1,3 +1,4 @@
+use serde_json::json;
 use warp::Filter;
 use web::router::*;
 #[tokio::main]
@@ -10,7 +11,10 @@ async fn main() {
     //let (cert_path, key_path) = init_cert_key();
     let sign_up_router = init_sign_up_router();
     let sign_in_router = init_sign_in_router();
-    let routers = sign_up_router.with(log).or(sign_in_router.with(log));
+    let upload_user_profile_photo_router = init_upload_user_profile_photo_router();
+    let routers = sign_up_router.with(log).or(sign_in_router
+        .with(log)
+        .or(upload_user_profile_photo_router.with(log)));
 
     warp::serve(routers)
         //.tls()
@@ -19,9 +23,38 @@ async fn main() {
         .run(([127, 0, 0, 1], 8080))
         .await;
 }
-#[test]
-fn test() {
-    let sign_in_html = std::fs::read_to_string("D:/project/rust_vscode/rust_web/face/luntan_files/html/登入注册.html")
-                .unwrap();
-            println!("{}", sign_in_html);
+#[tokio::test]
+async fn test() {
+    let file_bytes = std::fs::read("1.jpg").unwrap();
+    let json = json!(
+        {
+            "username":"username2",
+            "profile_photo_url":"url",
+        }
+    );
+    let json_bytes = serde_json::to_vec(&json).unwrap();
+    let part1 = reqwest::multipart::Part::bytes(json_bytes)
+        .file_name("upload_user_profile_photo.json") // 设置文件名
+        .mime_str("application/json")
+        .unwrap();
+    let part2 = reqwest::multipart::Part::bytes(file_bytes)
+        .file_name("1.jpg") // 设置文件名
+        .mime_str("image/jpeg")
+        .unwrap(); // 设置文件类型
+    let form = reqwest::multipart::Form::new()
+        .part("json_part", part1)
+        .part("img_part", part2); // 将文件part添加到multipart表单中
+    let text = reqwest::Client::builder()
+        .no_proxy()
+        .build()
+        .unwrap()
+        .post("http://127.0.0.1:8080/upload_user_profile_photo")
+        .multipart(form)
+        .send()
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
+    println!("{:?}", text);
 }

@@ -20,10 +20,17 @@ pub const INSERT_ONE_USER_INFO: &str = "INSERT INTO users
 VALUES 
 ($1, $2, $3, $4, $5, $6, $7, $8)";
 
+
+
 //根据用户名更新用户信息语句
 pub const UPDATE_USER_INFO_BY_USERNAME: &str = "UPDATE users
 SET username = $2, password = $3, sex = $4, birthday = $5, country = $6, province = $7, city = $8, profile_photo = $9
 WHERE username = $1";
+
+//更新单个用户头像url语句
+pub const UPDATE_USER_PROFILE_PHOTO_URL_INFO: &str = "UPDATE users 
+SET profile_photo = $1 
+WHERE username = $2";
 
 //根据用户名删除用户信息语句
 pub const DELETE_USER_INFO_BY_USERNAME: &str = "DELETE FROM users WHERE username = $1";

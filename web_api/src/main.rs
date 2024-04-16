@@ -1,4 +1,3 @@
-
 use std::sync::Arc;
 use warp::Filter;
 use web_api::{api_router::*, database_struct::*};
@@ -24,14 +23,15 @@ async fn main() {
     let db_pool = Arc::new(DbPool::new(config, 3, 10).await);
 
     let get_user_info_router = init_get_user_info_router(Arc::clone(&db_pool));
-    let upload_user_profile_photo_router = init_upload_user_profile_photo_router();
     let api_sign_in_router = init_api_sign_in_router(Arc::clone(&db_pool));
     let api_sign_up_router = init_api_sign_up_router(Arc::clone(&db_pool));
+    let api_upload_user_profile_photo_url_router =
+        init_upload_user_profile_photo_url_router(Arc::clone(&db_pool));
     let api_routers = get_user_info_router
         .with(log)
-        .or(upload_user_profile_photo_router.with(log))
         .or(api_sign_in_router.with(log))
-        .or(api_sign_up_router.with(log));
+        .or(api_sign_up_router.with(log))
+        .or(api_upload_user_profile_photo_url_router.with(log));
     warp::serve(api_routers).run(([127, 0, 0, 1], 8081)).await;
 }
 

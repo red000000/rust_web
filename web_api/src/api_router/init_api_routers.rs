@@ -74,40 +74,28 @@ pub fn init_get_user_info_router(
         })
         .with(cors)
 }
-
-pub fn init_upload_user_profile_photo_router(
+pub fn init_upload_user_profile_photo_url_router(
+    pool: Arc<DbPool>,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    use futures::TryStreamExt;
-    use tokio::io::AsyncWriteExt;
-
-    let cors = warp::cors().allow_any_origin().allow_headers(vec!["*"]);
+    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_headers(vec!["Content-Type"])
+        .allow_method("POST");
     warp::path("api")
-        .and(warp::path("upload_user_profile_photo"))
+        .and(warp::path("upload_user_profile_photo_url"))
         .and(warp::path::end())
         .and(warp::post())
         .and(warp::body::json())
-        .and(warp::multipart::form())
-        .then(
-            |body: serde_json::Value, form: warp::multipart::FormData| async {
-                let mut form = form;
-                let mut filenames = Vec::new();
-                let mut filepath = String::new();
-                let upload_user_profile_photo: UploadUserProfilePhoto =
+        .then(move |body: serde_json::Value| {
+            let pool = Arc::clone(&pool);
+            async move {
+                let upload_user_profile_photo_url_info: UpLoadUserProfilePhotoUrlInfo =
                     serde_json::from_value(body).unwrap();
-                while let Some(mut part) = form.try_next().await.unwrap() {
-                    if let Some(filename) = part.filename() {
-                        filenames.push(filename.to_string());
-                        // 提取文件名并保存文件到磁盘
-                        filepath = format!("写入测试/{}", filename);
-                        let mut file = tokio::fs::File::create(&filepath).await.unwrap();
-                        while let Some(chunk) = part.data().await {
-                            file.write_all_buf(&mut chunk.unwrap()).await.unwrap();
-                        }
-                    }
-                }
-                upload_user_profile_photo.check_and_return_info(filenames, filepath)
-            },
-        )
+                let upload_user_profile_photo_url =
+                    UpLoadUserProfilePhotoUrl::new(upload_user_profile_photo_url_info, pool);
+                upload_user_profile_photo_url.check_and_return_info().await
+            }
+        })
         .with(cors)
 }
 

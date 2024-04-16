@@ -78,16 +78,18 @@ SignInInfo:{
         flag:false,
     }
 
-上传用户头像api
-路由:http://127.0.0.1:8081/api/upload_user_profile_photo
+上传用户头像
+路由:http://127.0.0.1:8080/upload_user_profile_photo
 请求方式:POST
 前端发送信息:
-//form
+
+一个multipart/form-data编码的表单,内部包括:
+
     UploadUserProfilePhoto{
         username:string,
         profile_photo_url:string,
     }
-    multipart/form-data格式文件(内部为图片格式)
+    multipart/form-data格式文件(jpeg图片格式,也可以是jpg)
 
 后端发送信息:
     成功:
@@ -100,5 +102,29 @@ SignInInfo:{
     UploadUserProfilePhotoMessage:{
         message:string,
         message_type:u32,(大于0,具体情况在upload_user_profile_photo_statement.rs中定义)
+        flag:false,
+    }
+
+//静态服务器使用路由,与前端无关
+上传用户头像url api
+路由:http://127.0.0.1:8081/api/upload_user_profile_photo_url
+请求方式:POST
+静态后端发送信息:
+    UploadUserProfilePhoto{
+        username:string,
+        profile_photo_url:string,
+    }
+
+后端发送信息:
+    成功:
+    UploadUserProfilePhotoMessage:{
+        message:string,
+        message_type:u32,(0)
+        flag:true,
+    }
+    失败:
+    UploadUserProfilePhotoMessage:{
+        message:string,
+        message_type:u32,(大于0,具体情况在upload_user_profile_photo_statement_url.rs中定义)
         flag:false,
     }
