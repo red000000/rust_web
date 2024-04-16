@@ -1,60 +1,29 @@
 use crate::upload_user_profile_photo::*;
-use bytes::Buf;
-use futures::TryFutureExt;
 use warp::Filter;
-pub fn _init_cert_key() -> (String, String) {
-    let cert_path = "ssl/san_domain_com.crt";
-    let key_path = "ssl/san_domain_com.key";
-    (cert_path.to_string(), key_path.to_string())
-}
-//登录界面路由
-pub fn init_sign_up_router(
-) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("sign_up")
-        .and(warp::path::end())
-        .and(warp::get())
-        .then(|| async { warp::reply() })
-        .with(cors)
-}
-//注册界面路由
-pub fn init_sign_in_router(
-) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("sign_in")
-        .and(warp::path::end())
-        .and(warp::get())
-        .map(|| {
-            let sign_in_html = std::fs::read_to_string(
-                "D:/project/rust_vscode/rust_web/face/luntan_files/html/登入注册.html",
-            )
-            .unwrap();
-            warp::reply::html(sign_in_html)
-        })
-        .with(cors)
-}
-//上传页面路由
-pub fn init_upload_user_profile_photo_router(
+//上传头像api
+pub fn init_api_upload_user_profile_photo_router(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     use futures::TryStreamExt;
-    use tokio::io::AsyncWriteExt;
+    use bytes::Buf;
 
     let cors = warp::cors()
         .allow_any_origin()
         .allow_header("POST")
         .allow_headers(vec!["*"]);
 
-    warp::path("upload_user_profile_photo")
+    warp::path("static")
+        .and(warp::path("api"))
+        .and(warp::path("upload_user_profile_photo"))
         .and(warp::path::end())
         .and(warp::post())
-        .and(warp::multipart::form())
+        .and(warp::multipart::form().max_length(2*1024*1024*1024))
         .then(|form: warp::multipart::FormData| async {
             let mut form = form;
             let mut filenames = Vec::new();
             //缓冲区，表单完整
             let mut json_vec = Vec::new();
             let mut jpg_vec = Vec::new();
-            let filepath = "D:/project/rust_vscode/rust_web/web/写入测试".to_string();
+            let filepath = "D:/project/rust_vscode/rust_web/web_static/写入测试".to_string();
             //使用try_next按顺序异步读取
             while let Ok(part_option) = form.try_next().await {
                 if let Some(mut part) = part_option {
@@ -87,15 +56,11 @@ pub fn init_upload_user_profile_photo_router(
                 }
             }
 
-            //先这样
-            let filepath_and_file = format!("{}/{}",
-                filepath,
-                filenames[0]
-            );
-
             let upload_user_profile_photo_info: UploadUserProfilePhotoInfo =
                 serde_json::from_slice(&json_vec).unwrap();
 
+            //先这样
+            let filepath_and_file = format!("{}/{}", filepath, filenames[0]);
             if let Err(e) = tokio::fs::write(&filepath_and_file, jpg_vec).await {
                 eprintln!("写入文件失败{}", e);
             }
@@ -104,7 +69,7 @@ pub fn init_upload_user_profile_photo_router(
                 .no_proxy()
                 .build()
                 .unwrap()
-                .post("http://127.0.0.1:8081/api/upload_user_profile_photo_url")
+                .post("http://127.0.0.1:8081/dynamic/api/upload_user_profile_photo_url")
                 .json(&upload_user_profile_photo_info)
                 .send()
                 .await
@@ -115,15 +80,5 @@ pub fn init_upload_user_profile_photo_router(
             println!("{}", text);
             upload_user_profile_photo_info.check_and_return_info(filenames, filepath)
         })
-        .with(cors)
-}
-//主页页面路由
-pub fn init_index_router(
-) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    let cors = warp::cors().allow_any_origin();
-    warp::path("index")
-        .and(warp::path::end())
-        .and(warp::get())
-        .then(|| async { warp::reply() })
         .with(cors)
 }

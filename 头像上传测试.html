@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>头像上传测试</title>
+</head>
+<body>
+    <h1>头像上传测试</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">上传</button>
+
+    <script>
+        async function uploadFile() {
+            const formData = new FormData();
+
+            // 添加 JSON 数据
+            const jsonData = { "username": "John", "profile_photo_url": "url" };
+            let jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+            formData.append('json_data', jsonBlob);
+           
+            // 添加图片文件
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            let fileBlob = new Blob([file], { type: 'application/json' });
+            formData.append('photo', file);
+            try {
+                const response = await fetch('http://127.0.0.1:8080/static/api/upload_user_profile_photo', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('上传成功:', data);
+                } else {
+                    console.error('上传失败:', response.statusText);
+                }
+            } catch (error) {
+                console.error('上传过程中出错:', error);
+            }
+        }
+    </script>
+</body>
+</html>
