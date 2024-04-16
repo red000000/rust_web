@@ -224,7 +224,7 @@
                         <option value="--">--</option>
                     </select>
                 </span>
-                <a href="首页.html" class="toshouye">
+                <a href="index.html" class="toshouye">
                     <input type="button" value="返回" class="button">
                 </a>
                 <input type="submit" value="修改" class="submit">
@@ -257,10 +257,10 @@
             let jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
             formData.append('json_data', jsonBlob);
 
-            // 添加图片文件
+            // 添加图片文件 multipart/form-data
             const file = e.target.files[0];
-            let fileBlob = new Blob([file], { type: 'application/json' });
-            formData.append('photo', fileBlob);
+            let fileBlob = new Blob([file], { type: 'multipart/form-data' });
+            formData.append('photo.jpg', fileBlob);
 
             axios({
                 method: 'post',

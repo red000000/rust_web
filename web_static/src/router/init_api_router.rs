@@ -3,8 +3,8 @@ use warp::Filter;
 //上传头像api
 pub fn init_api_upload_user_profile_photo_router(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    use futures::TryStreamExt;
     use bytes::Buf;
+    use futures::TryStreamExt;
 
     let cors = warp::cors()
         .allow_any_origin()
@@ -16,7 +16,7 @@ pub fn init_api_upload_user_profile_photo_router(
         .and(warp::path("upload_user_profile_photo"))
         .and(warp::path::end())
         .and(warp::post())
-        .and(warp::multipart::form().max_length(2*1024*1024*1024))
+        .and(warp::multipart::form().max_length(2 * 1024 * 1024))//默认2mb
         .then(|form: warp::multipart::FormData| async {
             let mut form = form;
             let mut filenames = Vec::new();
@@ -38,15 +38,13 @@ pub fn init_api_upload_user_profile_photo_router(
                                 }
                             }
                         } else {
-                            if let Some(filename) = part.filename() {
-                                filenames.push(filename.to_string());
-                                //持续获取jpg数据直至异步流结束
-                                while let Some(chunk) = part.data().await {
-                                    if let Ok(jpg) = chunk {
-                                        jpg_vec.extend_from_slice(jpg.chunk())
-                                    } else {
-                                        break;
-                                    }
+                            filenames.push(part.name().to_string());
+                            //持续获取jpg数据直至异步流结束
+                            while let Some(chunk) = part.data().await {
+                                if let Ok(jpg) = chunk {
+                                    jpg_vec.extend_from_slice(jpg.chunk())
+                                } else {
+                                    break;
                                 }
                             }
                         }

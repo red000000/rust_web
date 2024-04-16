@@ -8,14 +8,16 @@ async fn main() {
     let log = warp::log("RUST_LOG");
     //初始化证书和私钥
     //let (cert_path, key_path) = init_cert_key();
+    let index_router = init_index_router();
     let sign_in_and_up_router = init_sign_in_and_up_router();
-    let upload_user_profile_photo_router = init_upload_user_profile_photo_router();
+    let user_info_router=init_user_info_router();
 
     let api_upload_user_profile_photo_router = init_api_upload_user_profile_photo_router();
-    
-    let routers = sign_in_and_up_router
+
+    let routers = index_router
         .with(log)
-        .or(upload_user_profile_photo_router.with(log))
+        .or(sign_in_and_up_router.with(log))
+        .or(user_info_router.with(log))
         .or(api_upload_user_profile_photo_router.with(log));
 
     warp::serve(routers)

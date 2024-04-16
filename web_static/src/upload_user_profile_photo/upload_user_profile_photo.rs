@@ -22,7 +22,6 @@ impl UploadUserProfilePhotoInfo {
         if let Ok(entries) = std::fs::read_dir(folder_path) {
             let mut found_files = vec![false; filenames.len()];
             for entry in entries {
-                println!("检查");
                 if let Ok(entry) = entry {
                     if let Some(file_name) = entry.file_name().to_str() {
 
