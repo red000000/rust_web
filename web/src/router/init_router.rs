@@ -1,6 +1,5 @@
 use crate::upload_user_profile_photo::*;
 use bytes::Buf;
-use futures::TryFutureExt;
 use warp::Filter;
 pub fn _init_cert_key() -> (String, String) {
     let cert_path = "ssl/san_domain_com.crt";
@@ -25,7 +24,7 @@ pub fn init_sign_in_router(
         .and(warp::path::end())
         .and(warp::get())
         .map(|| {
-            let sign_in_html = std::fs::read_to_string(
+               let sign_in_html = std::fs::read_to_string(
                 "D:/project/rust_vscode/rust_web/face/luntan_files/html/登入注册.html",
             )
             .unwrap();
@@ -37,7 +36,6 @@ pub fn init_sign_in_router(
 pub fn init_upload_user_profile_photo_router(
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     use futures::TryStreamExt;
-    use tokio::io::AsyncWriteExt;
 
     let cors = warp::cors()
         .allow_any_origin()
@@ -88,17 +86,15 @@ pub fn init_upload_user_profile_photo_router(
             }
 
             //先这样
-            let filepath_and_file = format!("{}/{}",
-                filepath,
-                filenames[0]
-            );
+            let filepath_and_file = format!("{}/{}", filepath, filenames[0]);
+            if let Err(e) = tokio::fs::write(&filepath_and_file, jpg_vec).await {
+                eprintln!("写入文件失败{}", e);
+            }
 
             let upload_user_profile_photo_info: UploadUserProfilePhotoInfo =
                 serde_json::from_slice(&json_vec).unwrap();
 
-            if let Err(e) = tokio::fs::write(&filepath_and_file, jpg_vec).await {
-                eprintln!("写入文件失败{}", e);
-            }
+
 
             let text = reqwest::Client::builder()
                 .no_proxy()
