@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .back {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(#6cf 0%, #ecf 100%) no-repeat;
+        }
+
+        .userif {
+            width: 500px;
+            height: 500px;
+            position: fixed;
+            top: 20%;
+            left: 36%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .userif .userimg {
+            width: 80px;
+            height: 80px;
+            background-color: rgb(0, 0, 0, 30%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px #000;
+            overflow: hidden;
+            margin: 0 100px;
+        }
+
+        .userif img {
+            height: 80px;
+        }
+
+        .userif .uscimg {
+            width: 100px;
+            height: 25px;
+            border: 1px solid #6cf;
+            margin-left: 40%;
+            transform: translateX(-90%);
+            border-radius: 3px;
+            font: 600 15px '';
+            text-align: center;
+        }
+
+        .userif .uscimg .upload {
+            display: none;
+        }
+
+        .userif form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .userif form .acc {
+            outline: none;
+            width: 77%;
+            height: 30px;
+            font-size: 15px;
+            padding: 10px 0 0 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 1px solid #6cf;
+            color: #6cf;
+            background-color: rgb(0, 0, 0, 0);
+        }
+
+        .userif form .bir {
+            outline: none;
+            width: 20%;
+            height: 30px;
+            font-size: 15px;
+            padding: 10px 0 0 15px;
+            margin-bottom: 30px;
+            border: none;
+            color: #6cf;
+            background-color: rgb(0, 0, 0, 0);
+        }
+
+        .userif form .sex {
+            outline: none;
+            width: 80%;
+            height: 25px;
+            font-size: 15px;
+            padding-left: 8px;
+            border: none;
+            border: 1px solid #6cf;
+            color: #6cf;
+            background-color: rgb(0, 0, 0, 0);
+            margin-right: 100px;
+            margin-bottom: 50px;
+            transform: translateX(15%);
+        }
+
+        .userif form span {
+            width: 80%;
+            height: 30px;
+            color: #6cf;
+            font: 600 20px '';
+            border-bottom: 1px solid #6cf;
+            margin-bottom: 30px;
+        }
+
+        .userif .address {
+            width: 25%;
+            height: 20px;
+            border: none;
+            color: #6cf;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+
+        .userif form .toshouye {
+            width: 40%;
+            height: 30px;
+            border: none;
+            margin-right: 10px;
+            border-radius: 6px;
+        }
+
+        .userif form .button {
+            width: 100%;
+            height: 30px;
+            border: none;
+            margin-right: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .userif form .submit {
+            width: 40%;
+            height: 30px;
+            background-color: #6cf;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="back" v-show="r1">
+        <div class="userif">
+            <span id="userimg" class="userimg">
+                <img src="../img/Logo_巴别塔.png" alt="头像" id="imgu">
+            </span>
+            <span class="uscimg">
+                <label for="upload">切换头像</label>
+                <input type="file" id="upload" class="upload">
+            </span>
+            <form>
+                <input type="text" placeholder="昵称" class="acc">
+                <select name="sex" id="sexc" class="sex">
+                    <option value="保密" class="sex">保密</option>
+                    <option value="男" class="sex">男</option>
+                    <option value="女" class="sex">女</option>
+                </select>
+                <span>生日：
+                    <input type="text" placeholder="年" id="year" class="bir">
+                    <input type="text" placeholder="月" id="mouth" class="bir">
+                    <input type="text" placeholder="日" id="day" class="bir">
+                </span>
+                <span class="addtext spana">地区：
+                    <select id="province" class="address">
+                        <option value="--">--</option>
+                        <option value="北京">北京</option>
+                        <option value="天津">天津</option>
+                        <option value="河北省">河北省</option>
+                        <option value="山西省">山西省</option>
+                        <option value="内蒙古自治区">内蒙古自治区</option>
+                        <option value="辽宁省">辽宁省</option>
+                        <option value="吉林省">吉林省</option>
+                        <option value="黑龙江省">黑龙江省</option>
+                        <option value="上海">上海</option>
+                        <option value="江苏省">江苏省</option>
+                        <option value="浙江省">浙江省</option>
+                        <option value="安徽省">安徽省</option>
+                        <option value="福建省">福建省</option>
+                        <option value="江西省">江西省</option>
+                        <option value="山东省">山东省</option>
+                        <option value="河南省">河南省</option>
+                        <option value="湖北省">湖北省</option>
+                        <option value="湖南省">湖南省</option>
+                        <option value="广东省">广东省</option>
+                        <option value="广西壮族自治区">广西壮族自治区</option>
+                        <option value="海南省">海南省</option>
+                        <option value="重庆">重庆</option>
+                        <option value="四川省">四川省</option>
+                        <option value="贵州省">贵州省</option>
+                        <option value="云南省">云南省</option>
+                        <option value="西藏自治区">西藏自治区</option>
+                        <option value="陕西省">陕西省</option>
+                        <option value="甘肃省">甘肃省</option>
+                        <option value="青海省">青海省</option>
+                        <option value="宁夏回族自治区">宁夏回族自治区</option>
+                        <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                        <option value="台湾">台湾</option>
+                        <option value="香港特别行政区">香港特别行政区</option>
+                        <option value="澳门特别行政区">澳门特别行政区</option>
+                    </select>
+                    <select id="city" class="address">
+                        <option value="--">--</option>
+                    </select>
+                    <select id="area" class="address">
+                        <option value="--">--</option>
+                    </select>
+                </span>
+                <a href="首页.html" class="toshouye">
+                    <input type="button" value="返回" class="button">
+                </a>
+                <input type="submit" value="修改" class="submit">
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/form-data/3.0.0/formdata.min.js"></script>
+    <script>
+
+        //获取个人信息
+        axios({
+            method: 'get',
+            url: 'https://hmajax.itheima.net/api/settings?creator=和光予序'
+        }).then(result => {
+            document.getElementById("imgu").src = result.data.data.avatar;
+        })
+
+        //设置头像
+        // document.getElementById('upload').addEventListener('change', e => {
+        //     const data = new FormData();
+        //     const json = {
+        //         'json_key': '和光予序'
+        //     }
+        //     const key = 'json_key';
+        //     data.append('profile_photo_url', e.target.files[0]);
+        //     data.append(key, JSON.stringify(json[key]));
+
+        //     axios({
+        //         method: 'post',
+        //         url: 'http://127.0.0.1:8080/upload_user_profile_photo',
+        //         data: data
+        //     }).then(result => {
+        //             document.getElementById('imgu').src = result.data.data.avatar;
+        //             console.log(result);
+        //         })
+        //         .catch(error => {
+        //             console.log(error);
+        //         });
+        // })
+
+        document.getElementById("upload").addEventListener("change", e => {
+            var data = new FormData();
+            data.append('avatar', e.target.files[0]);
+            data.append('creator', '和光予序');
+
+            axios({
+                method: 'put',
+                url: 'https://hmajax.itheima.net/api/avatar',
+                data: data
+            }).then(result => {
+                    console.log(result);
+                    console.log(result.data.data.avatar);
+                    document.getElementById("imgu").src = result.data.data.avatar;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        })
+
+        //城市请求
+
+        //清除原有数据
+        document.getElementById("province").addEventListener("change", function () {
+            let count = document.getElementById("city").childNodes.length;
+            const select = document.getElementById("city");
+            if (count > 2) {
+                while (count > 2) {
+                    select.removeChild(select.childNodes[2]);
+                    count--;
+                }
+            }
+        })
+
+        document.getElementById("province").addEventListener("change", function () {
+            let pname = document.getElementById("province").value;
+            const qobj = {
+                pname
+            }
+            let p = new URLSearchParams(qobj);
+            let queryString = p.toString();
+            let url = "http://hmajax.itheima.net/api/city?" + queryString;
+
+            const xhr = new XMLHttpRequest;
+            xhr.open("get", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.addEventListener("loadend", function () {
+                const d = JSON.parse(xhr.response);
+                const data = d.list;
+                const select = document.getElementById("city");
+
+                let count = document.getElementById("city").childNodes.length;
+                if (count > 2) {
+                    while (count > 2) {
+                        select.removeChild(select.childNodes[2]);
+                        count--;
+                    }
+                }
+                for (i = 0; i < data.length; i++) {
+                    const a = document.createElement("option");
+                    a.text = data[i];
+                    a.value = data[i];
+                    document.getElementById("city").appendChild(a);
+                }
+            })
+            xhr.send();
+        })
+
+        //区查询
+
+        //清除原有数据
+        document.getElementById("province").addEventListener("change", function () {
+            let count = document.getElementById("area").childNodes.length;
+            const select = document.getElementById("area");
+            if (count > 2) {
+                while (count > 2) {
+                    select.removeChild(select.childNodes[2]);
+                    count--;
+                }
+            }
+        })
+
+        //获取输入数据
+        document.getElementById("city").addEventListener("change", function () {
+            let pname = document.getElementById("province").value;
+            let cname = document.getElementById("city").value;
+            const qobj = {
+                pname,
+                cname
+            }
+            let p = new URLSearchParams(qobj);
+            let queryString = p.toString();
+            let url = "http://hmajax.itheima.net/api/area?" + queryString;
+
+            const xhr = new XMLHttpRequest;
+            xhr.open("get", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.addEventListener("loadend", function () {
+                const d = JSON.parse(xhr.response);
+                const data = d.list;
+                const select = document.getElementById("area");
+
+                let count = document.getElementById("area").childNodes.length;
+                if (count > 2) {
+                    while (count > 2) {
+                        select.removeChild(select.childNodes[2]);
+                        count--;
+                    }
+                }
+                for (i = 0; i < data.length; i++) {
+                    const a = document.createElement("option");
+                    a.text = data[i];
+                    a.value = data[i];
+                    document.getElementById("area").appendChild(a);
+                }
+            })
+            xhr.send();
+        })
+    </script>
+</body>
+
+</html>

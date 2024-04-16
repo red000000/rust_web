@@ -252,7 +252,7 @@
             <form action="首页.html">
                 <input class="acc" id="username" type="text" placeholder="用户名">
                 <input class="acc" id="password" type="password" placeholder="密码">
-                <input class="Login" id="Login" type="submit" value="Login" @click.prevent>
+                <input class="Login" id="Login" type="submit" value="Login">
             </form>
             <div class="fn">
                 <a href="#" id="toright" @click="rt1">注册账户</a>
@@ -382,6 +382,18 @@
         })
 
         //城市请求
+
+        //清除原有数据
+        document.getElementById("province").addEventListener("change", function () {
+        let count = document.getElementById("city").childNodes.length;
+        const select = document.getElementById("city");
+        if (count > 2) {
+            while (count > 2) {
+                select.removeChild(select.childNodes[2]);
+                count--;
+            }
+        }
+        })
         document.getElementById("province").addEventListener("change", function () {
             let pname = document.getElementById("province").value;
             const qobj = {
@@ -492,7 +504,8 @@
                 xhr.addEventListener("loadend", () => {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         //成功获取用户信息
-                        userif(config.username);
+                        // userif(config.username);
+                        result(xhr.response);
                     } else {
                         reject(new Error(xhr.response));
                     }

@@ -11,22 +11,31 @@
 <body>
 
     <div class="shell">
+
         <header>
-            <a href="登入注册.html" class="tologon">
+            <a href="登入注册.html" class="tologon"  @click.prevent="rt1">
                 <div id="logon" class="image-text">
                     <span class="image">
-                        <img src="../img/Logo_巴别塔.png" alt="">
+                        <img src="../img/Logo_巴别塔.png" alt="" id="imgu">
                     </span>
                     <div class="text logo-text">
-                        <span class="name">登入</span>
+                        <span class="name" id="username">和光予序</span>
                         <span class="level"></span>
                     </div>
                 </div>
             </a>
         </header>
+        
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
+                    <li class="div-link">
+                        <a href="用户信息.html">
+                            <i class="iconfont icon-shouye icon"></i>
+                            <span class="text nac-text">个人信息</span>
+                        </a>
+                    </li>
+
                     <li class="div-link">
                         <a href="#">
                             <i class="iconfont icon-shouye icon"></i>
@@ -73,8 +82,8 @@
                 </li>
             </div>
         </div>
-
     </div>
+
     <div class="lmenu-shouye">
         <div class="lmenu-text">
             <span class="ltext">发现分区
@@ -92,6 +101,7 @@
             </ul>
         </div>
     </div>
+
     <div class="content">
         <div class="thead">
             <div class="thead-text">
@@ -141,7 +151,11 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/form-data/3.0.0/formdata.min.js"></script>    
     <script>
+
         document.querySelector(".menu-links").addEventListener("click", e => {
             console.log(e.target.tagName);
         })
@@ -149,7 +163,17 @@
             console.log(e.target.tagName);
         })
 
-
+        //获取个人信息
+        axios({
+            method: 'get',
+            url: 'https://hmajax.itheima.net/api/settings?creator=和光予序'
+        }).then(result => {
+            console.log(result);
+            document.getElementById("imgu").src = result.data.data.avatar;
+            // document.getElementById("username").innerHTML = result.data.data.desc;
+        }).catch(error => {
+            console.dir(error);
+        })
     </script>
 </body>
 </html>
