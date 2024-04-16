@@ -246,46 +246,53 @@
         })
 
         //设置头像
-        // document.getElementById('upload').addEventListener('change', e => {
-        //     const data = new FormData();
-        //     const json = {
-        //         'json_key': '和光予序'
-        //     }
-        //     const key = 'json_key';
-        //     data.append('profile_photo_url', e.target.files[0]);
-        //     data.append(key, JSON.stringify(json[key]));
+        document.getElementById('upload').addEventListener('change', e => {
+            const formData = new FormData();
+
+            // 添加 JSON 数据
+            const jsonData = {
+                'username': '和光予序',
+                'profile_photo_url': 'url'
+            };
+            let jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+            formData.append('json_data', jsonBlob);
+
+            // 添加图片文件
+            const file = e.target.files[0];
+            let fileBlob = new Blob([file], { type: 'application/json' });
+            formData.append('photo', fileBlob);
+
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:8080/static/api/upload_user_profile_photo',
+                data: formData
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        })
+
+        // document.getElementById("upload").addEventListener("change", e => {
+        //     var data = new FormData();
+        //     data.append('avatar', e.target.files[0]);
+        //     data.append('creator', '和光予序');
 
         //     axios({
-        //         method: 'post',
-        //         url: 'http://127.0.0.1:8080/upload_user_profile_photo',
+        //         method: 'put',
+        //         url: 'https://hmajax.itheima.net/api/avatar',
         //         data: data
         //     }).then(result => {
-        //             document.getElementById('imgu').src = result.data.data.avatar;
         //             console.log(result);
+        //             console.log(result.data.data.avatar);
+        //             document.getElementById("imgu").src = result.data.data.avatar;
         //         })
         //         .catch(error => {
         //             console.log(error);
         //         });
         // })
-
-        document.getElementById("upload").addEventListener("change", e => {
-            var data = new FormData();
-            data.append('avatar', e.target.files[0]);
-            data.append('creator', '和光予序');
-
-            axios({
-                method: 'put',
-                url: 'https://hmajax.itheima.net/api/avatar',
-                data: data
-            }).then(result => {
-                    console.log(result);
-                    console.log(result.data.data.avatar);
-                    document.getElementById("imgu").src = result.data.data.avatar;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        })
 
         //城市请求
 
