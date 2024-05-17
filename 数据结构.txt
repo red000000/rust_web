@@ -132,3 +132,46 @@ SignInInfo:{
         message_type:u32,(大于0,具体情况在upload_user_profile_photo_statement_url.rs中定义)
         flag:false,
     }
+
+评论信息：
+路由：
+请求方式：POST
+前端发送信息：
+    comment：{
+        area: int,
+        uesrname: string,
+        commentid: int,
+        content: string,
+    }
+后端返回值：
+    成功:
+    SignInInfoMessage:{
+        message:string,
+        message_type:u32,(0)
+        flag:true,
+    }
+    失败:
+    SignInInfoMessage:{
+        message:string,
+        message_type:u32,(大于0,具体情况在sign_in_statement.rs中定义)
+        flag:false,
+    }
+
+请求评论信息：
+路由：
+请求方式：GET
+前端发送信息：
+    commentget：{
+        area: int,
+        uesrname: string,
+    }
+后端返回信息：
+    成功：
+    comment:{
+        area: int,
+        uesrname: string,
+        commentid: int,
+        content: string,
+    }
+    失败：
+    
