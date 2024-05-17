@@ -37,11 +37,13 @@ add.addEventListener('click', (e) => {
 
 //删除
 area.addEventListener('click', (e) => {
-    for (let i = e.target.id - 1; i < arr.length; i++) {
-        arr[i] = arr[i + 1];
+    if (e.target.value) {
+        for (let i = e.target.id - 1; i < arr.length; i++) {
+            arr[i] = arr[i + 1];
+        }
+        arr.pop();
+        render();
     }
-    arr.pop();
-    render();
 })
 
 //渲染
@@ -57,7 +59,7 @@ function render() {
                 <div class="delete">
                     <ul>
                         <li>...</li>
-                        <li name="delete" id="${arr[i].personid}">删除</li>
+                        <li name="delete" id="${arr[i].personid}" value="1">删除</li>
                     </ul>
                 </div>
             </td>
