@@ -2,6 +2,7 @@
 const area = document.getElementById("area");
 const add = document.getElementById("add");
 const text = document.getElementById("text");
+const form = document.getElementById("form");
 const arr = []; //存储消息对象
 
 //添加
@@ -19,22 +20,21 @@ add.addEventListener('click', (e) => {
         text.value = ''; // 清空输入框
     }
 })
-//回车输入，但是有bug
-// text.onkeyup = (e) => {
-//     if (e.keycode == 13) {
-//         e.preventDefault();
-//         if (text.value) {
-//             const obj = {
-//                 personid: arr.length + 1,
-//                 username: "和光予序",
-//                 content: text.value
-//             }
-//             arr.push(obj);
-//             render();
-// text.innerHTML = '';
-//         }
-//     }
-// }
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (text.value) { // 检查输入框的值是否为空
+        const obj = {
+            personid: arr.length + 1,
+            username: "和光予序",
+            content: text.value
+        }
+        arr.push(obj);
+        render();
+        text.value = ''; // 清空输入框
+    }
+})
 
 //删除
 area.addEventListener('click', (e) => {
@@ -44,6 +44,9 @@ area.addEventListener('click', (e) => {
             arr[i] = arr[i + 1];
         }
         arr.pop(); // 删除数组末尾对象
+        for (let j = 0; j < arr.length; j++) {
+            arr[j].personid = j + 1;
+        }
         render(); // 再次渲染
     }
 })
